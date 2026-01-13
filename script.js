@@ -109,6 +109,11 @@ function calculateREBA() {
    highlightScoreA(neckScore, trunkScore, legsScore);
 const taskName = document.getElementById("taskName").value || "-";
 const reviewer = document.getElementById("reviewer").value || "-";
+const safeA = clamp(scoreA, 1, tableC.length);
+const safeB = clamp(scoreB, 1, tableC[0].length);
+
+const finalScore =
+  tableC[safeA - 1][safeB - 1] + activity;
 
 document.getElementById("resultTask").textContent = taskName;
 document.getElementById("resultReviewer").textContent = reviewer;
@@ -226,11 +231,14 @@ canvas.addEventListener("click", e => {
 
 
 function resetForm() {
-  document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
+function resetForm() {
+  document.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
+  document.querySelectorAll("input[type=number], input[type=text]").forEach(i => i.value = "");
+  document.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = false);
   document.getElementById("result").classList.add("hidden");
+  clearHighlight();
 }
-document.getElementById("reportDate").textContent =
-  new Date().toLocaleDateString();
+
 /* ===============================
    ANGLE → SCORE MAPPING (REBA)
 ================================ */
