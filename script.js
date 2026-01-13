@@ -151,6 +151,46 @@ function exportCSV() {
   a.download = "reba_valid.csv";
   a.click();
 }
+/* =========================
+   PHOTO + MARKING SYSTEM
+========================= */
+const photoInput = document.getElementById("photoInput");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let img = new Image();
+let points = [];
+
+photoInput.onchange = e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      points = [];
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+canvas.addEventListener("click", e => {
+  const rect = canvas.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+  const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+  points.push({ x, y });
+
+  ctx.fillStyle = "red";
+  ctx.beginPath();
+  ctx.arc(x, y, 5, 0, Math.PI * 2);
+  ctx.fill();
+});
+
 
 function resetForm() {
   document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
