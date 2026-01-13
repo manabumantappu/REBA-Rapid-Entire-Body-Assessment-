@@ -1,128 +1,158 @@
-function calculateREBA() {
-  const neck = +document.getElementById("neck").value;
-  const trunk = +document.getElementById("trunk").value;
-  const legs = +document.getElementById("legs").value;
+/* =========================
+   REBA TABLE (OFFICIAL)
+========================= */
 
-  const upperArm = +document.getElementById("upperArm").value;
-  const lowerArm = +document.getElementById("lowerArm").value;
-  const wrist = +document.getElementById("wrist").value;
+// TABLE A: Neck + Trunk + Legs
+const tableA = [
+/* Neck 1 */ [
+  [1,2,3,4], // Trunk 1 (legs 1-4)
+  [2,3,4,5], // Trunk 2
+  [3,4,5,6], // Trunk 3
+  [4,5,6,7], // Trunk 4
+  [5,6,7,8]  // Trunk 5
+],
+/* Neck 2 */ [
+  [2,3,4,5],
+  [3,4,5,6],
+  [4,5,6,7],
+  [5,6,7,8],
+  [6,7,8,9]
+],
+/* Neck 3 */ [
+  [3,4,5,6],
+  [4,5,6,7],
+  [5,6,7,8],
+  [6,7,8,9],
+  [7,8,9,10]
+]
+];
 
-  const load = +document.getElementById("load").value;
-  const activity = +document.getElementById("activity").value;
+// TABLE B: UpperArm + LowerArm + Wrist
+const tableB = [
+/* Upper 1 */ [
+  [1,2,3], // Lower 1
+  [2,3,4]  // Lower 2
+],
+/* Upper 2 */ [
+  [2,3,4],
+  [3,4,5]
+],
+/* Upper 3 */ [
+  [3,4,5],
+  [4,5,6]
+]
+];
 
-  // Simplified REBA logic (educational)
-  const scoreA = neck + trunk + legs + load;
-  const scoreB = upperArm + lowerArm + wrist;
-  const total = scoreA + scoreB + activity;
+// FINAL TABLE C
+const tableC = [
+ [1,2,3,4,5,6,7],
+ [2,3,4,5,6,7,8],
+ [3,4,5,6,7,8,9],
+ [4,5,6,7,8,9,10],
+ [5,6,7,8,9,10,11],
+ [6,7,8,9,10,11,12],
+ [7,8,9,10,11,12,13],
+ [8,9,10,11,12,13,14]
+];
 
-  let risk = "";
-  let recommendation = "";
+// =========================
 
-  if (total <= 3) {
-    risk = "Sangat Rendah";
-    recommendation = "Postur dapat diterima.";
-  } else if (total <= 7) {
-    risk = "Sedang";
-    recommendation = "Perlu evaluasi dan perbaikan.";
-  } else if (total <= 10) {
-    risk = "Tinggi";
-    recommendation = "Perlu perbaikan segera.";
-  } else {
-    risk = "Sangat Tinggi";
-    recommendation = "Tindakan ergonomi harus dilakukan sekarang.";
-  }
-
-  document.getElementById("score").textContent = total;
-  document.getElementById("risk").textContent = risk;
-  document.getElementById("recommendation").textContent = recommendation;
-
-  document.getElementById("result").classList.remove("hidden");
-}
-
-function resetForm() {
-  document.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
-  document.getElementById("result").classList.add("hidden");
-}
 let historyData = JSON.parse(localStorage.getItem("rebaHistory")) || [];
 
 // THEME
-const toggle = document.getElementById("themeToggle");
-toggle.onclick = () => {
+document.getElementById("themeToggle").onclick = () => {
   document.body.classList.toggle("dark");
   localStorage.setItem("theme", document.body.classList.contains("dark"));
 };
-
 if (localStorage.getItem("theme") === "true") {
   document.body.classList.add("dark");
 }
 
-// HITUNG REBA
+// =========================
+// CALCULATE REBA (REAL)
+// =========================
 function calculateREBA() {
-  const get = id => +document.getElementById(id).value;
+  const v = id => +document.getElementById(id).value;
 
-  const scoreA = get("neck") + get("trunk") + get("legs") + get("load");
-  const scoreB = get("upperArm") + get("lowerArm") + get("wrist");
-  const total = scoreA + scoreB + get("activity");
+  const neck = v("neck") - 1;
+  const trunk = v("trunk") - 1;
+  const legs = v("legs") - 1;
+
+  const upper = v("upperArm") - 1;
+  const lower = v("lowerArm") - 1;
+  const wrist = v("wrist") - 1;
+
+  const load = v("load");
+  const coupling = v("coupling");
+  const activity = v("activity");
+
+  const scoreA = tableA[neck][trunk][legs] + load;
+  const scoreB = tableB[upper][lower][wrist] + coupling;
+
+  const finalScore = tableC[scoreA-1][scoreB-1] + activity;
 
   let risk, rec;
-  if (total <= 3) {
-    risk = "Sangat Rendah"; rec = "Postur dapat diterima.";
-  } else if (total <= 7) {
-    risk = "Sedang"; rec = "Perlu evaluasi.";
-  } else if (total <= 10) {
-    risk = "Tinggi"; rec = "Perbaikan segera.";
+  if (finalScore <= 1) {
+    risk = "Sangat Rendah";
+    rec = "Tidak diperlukan tindakan.";
+  } else if (finalScore <= 3) {
+    risk = "Rendah";
+    rec = "Mungkin perlu perbaikan.";
+  } else if (finalScore <= 7) {
+    risk = "Sedang";
+    rec = "Perlu investigasi dan perubahan.";
+  } else if (finalScore <= 10) {
+    risk = "Tinggi";
+    rec = "Perlu tindakan segera.";
   } else {
-    risk = "Sangat Tinggi"; rec = "Tindakan ergonomi sekarang.";
+    risk = "Sangat Tinggi";
+    rec = "Tindakan harus dilakukan SEKARANG.";
   }
 
-  document.getElementById("score").textContent = total;
+  document.getElementById("score").textContent = finalScore;
   document.getElementById("risk").textContent = risk;
   document.getElementById("recommendation").textContent = rec;
   document.getElementById("result").classList.remove("hidden");
 
-  saveHistory(total, risk);
+  saveHistory(finalScore, risk);
 }
 
-// SIMPAN RIWAYAT
+// =========================
+// HISTORY
+// =========================
 function saveHistory(score, risk) {
-  const item = {
+  historyData.unshift({
     date: new Date().toLocaleString(),
-    score,
-    risk
-  };
-  historyData.unshift(item);
+    score, risk
+  });
   localStorage.setItem("rebaHistory", JSON.stringify(historyData));
   renderHistory();
 }
 
-// TAMPIL RIWAYAT
 function renderHistory() {
   const ul = document.getElementById("history");
   ul.innerHTML = "";
   historyData.forEach(h => {
     const li = document.createElement("li");
-    li.textContent = `${h.date} | Skor: ${h.score} | ${h.risk}`;
+    li.textContent = `${h.date} | Skor ${h.score} | ${h.risk}`;
     ul.appendChild(li);
   });
 }
 renderHistory();
 
-// EXPORT CSV
+// =========================
 function exportCSV() {
   let csv = "Tanggal,Skor,Risiko\n";
-  historyData.forEach(h => {
+  historyData.forEach(h=>{
     csv += `${h.date},${h.score},${h.risk}\n`;
   });
-
-  const blob = new Blob([csv], { type: "text/csv" });
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "reba_history.csv";
+  a.href = URL.createObjectURL(new Blob([csv]));
+  a.download = "reba_valid.csv";
   a.click();
 }
 
-// RESET
 function resetForm() {
-  document.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
+  document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
   document.getElementById("result").classList.add("hidden");
 }
