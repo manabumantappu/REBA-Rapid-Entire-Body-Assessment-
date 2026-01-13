@@ -94,6 +94,18 @@ function calculateREBA() {
   lowerArmScore = clamp(lowerArmScore, 1, 2);
   wristScore = clamp(wristScore, 1, 3);
 
+   // === TAMPILKAN SEMUA SKOR PER BAGIAN ===
+
+// Grup A
+document.getElementById("neckScoreText").textContent = neckScore;
+document.getElementById("trunkScoreText").textContent = trunkScore;
+document.getElementById("legsScoreText").textContent = legsScore;
+
+// Grup B
+document.getElementById("upperArmScoreText").textContent = upperArmScore;
+document.getElementById("lowerArmScoreText").textContent = lowerArmScore;
+document.getElementById("wristScoreText").textContent = wristScore;
+
   const load = v("load");
   const coupling = v("coupling");
   const activity = v("activity");
