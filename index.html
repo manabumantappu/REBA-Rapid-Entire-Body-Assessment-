@@ -3,156 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANALISA REBA</title>
+<title>REBA Analysis</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
-  <h1>ANALISA REBA</h1>
-  <p>Rapid Entire Body Assessment</p>
-  <button id="themeToggle">🌙</button>
+  <h1 data-i18n="title">ANALISA REBA</h1>
+  <p data-i18n="subtitle">Rapid Entire Body Assessment</p>
+
+  <div class="lang-switch">
+    <button onclick="setLang('id')">ID</button>
+    <button onclick="setLang('en')">EN</button>
+    <button onclick="setLang('jp')">JP</button>
+  </div>
 </header>
 
 <main class="container">
 
 <section class="card">
-  <h2>Informasi Penilaian</h2>
-  <label>Task
-    <input id="taskName" placeholder="Contoh: Angkat Box Gudang">
+  <h2 data-i18n="info">Informasi Penilaian</h2>
+
+  <label data-i18n="task">Task / Pekerjaan
+    <input id="taskName">
   </label>
-  <label>Reviewer
-    <input id="reviewer" placeholder="Contoh: Santoso">
+
+  <label data-i18n="reviewer">Reviewer / Penilai
+    <input id="reviewer">
   </label>
 </section>
 
-<!-- ================= GROUP A ================= -->
 <section class="card">
-  <h2>GROUP A – POSTUR TUBUH</h2>
+  <h2>Group A</h2>
 
-  <!-- STEP 1 -->
-  <div class="step">
-    <h3>Step 1 – Neck</h3>
-    <img src="images/step1-neck.JPG">
+  <label data-i18n="neck">Leher
     <select id="neck">
-      <option value="1">Netral</option>
-      <option value="2">Fleksi / ekstensi</option>
-      <option value="3">Twist / side bend</option>
+      <option value="1" data-i18n="neutral">Netral</option>
+      <option value="2" data-i18n="flex">Fleksi / Ekstensi</option>
+      <option value="3" data-i18n="twist">Twist / Side bend</option>
     </select>
-    <div class="step-score">Skor: <span id="sNeck">1</span></div>
-  </div>
+  </label>
 
-  <!-- STEP 2 -->
-  <div class="step">
-    <h3>Step 2 – Trunk</h3>
-    <img src="images/step2-trunk.JPG">
+  <label data-i18n="trunk">Punggung
     <select id="trunk">
-      <option value="1">Tegak</option>
-      <option value="2">Membungkuk</option>
-      <option value="3">Membungkuk berat</option>
+      <option value="1" data-i18n="upright">Tegak</option>
+      <option value="2" data-i18n="bend">Membungkuk</option>
+      <option value="3" data-i18n="heavybend">Membungkuk berat</option>
     </select>
-    <div class="step-score">Skor: <span id="sTrunk">1</span></div>
-  </div>
+  </label>
 
-  <!-- STEP 3 -->
-  <div class="step">
-    <h3>Step 3 – Legs</h3>
-    <img src="images/step3-legs.JPG">
+  <label data-i18n="legs">Kaki
     <select id="legs">
-      <option value="1">Stabil</option>
-      <option value="2">Tidak stabil</option>
-    </select>
-    <div class="step-score">Skor: <span id="sLegs">1</span></div>
-  </div>
-
-  <label>Beban
-    <select id="load">
-      <option value="0">&lt;5 kg</option>
-      <option value="1">5–10 kg</option>
-      <option value="2">&gt;10 kg</option>
+      <option value="1" data-i18n="stable">Stabil</option>
+      <option value="2" data-i18n="unstable">Tidak stabil</option>
     </select>
   </label>
-
 </section>
 
-<!-- ================= GROUP B ================= -->
 <section class="card">
-  <h2>GROUP B – LENGAN</h2>
+  <h2>Group B</h2>
 
-  <!-- STEP 7 -->
-  <div class="step">
-    <h3>Step 7 – Upper Arm</h3>
-    <img src="images/step7-upper-arm.JPG">
+  <label data-i18n="upperarm">Lengan Atas
     <select id="upperArm">
-      <option value="1">Netral</option>
-      <option value="2">Terangkat</option>
-      <option value="3">Di atas bahu</option>
-    </select>
-    <div class="step-score">Skor: <span id="sUpper">1</span></div>
-  </div>
-
-  <!-- STEP 8 -->
-  <div class="step">
-    <h3>Step 8 – Lower Arm</h3>
-    <img src="images/step8-lower-arm.JPG">
-    <select id="lowerArm">
-      <option value="1">Normal</option>
-      <option value="2">Ekstrem</option>
-    </select>
-    <div class="step-score">Skor: <span id="sLower">1</span></div>
-  </div>
-
-  <!-- STEP 9 -->
-  <div class="step">
-    <h3>Step 9 – Wrist</h3>
-    <img src="images/step9-wrist.JPG">
-    <select id="wrist">
-      <option value="1">Netral</option>
-      <option value="2">Menekuk / twist</option>
-    </select>
-    <div class="step-score">Skor: <span id="sWrist">1</span></div>
-  </div>
-
-  <label>Coupling
-    <select id="coupling">
-      <option value="0">Baik</option>
-      <option value="1">Cukup</option>
-      <option value="2">Buruk</option>
+      <option value="1" data-i18n="neutral">Netral</option>
+      <option value="2" data-i18n="raised">Terangkat</option>
+      <option value="3" data-i18n="above">Di atas bahu</option>
     </select>
   </label>
-</section>
 
-<section class="card">
-  <h2>Aktivitas</h2>
-  <select id="activity">
-    <option value="0">Normal</option>
-    <option value="1">Statis / berulang</option>
-  </select>
+  <label data-i18n="lowerarm">Lengan Bawah
+    <select id="lowerArm">
+      <option value="1" data-i18n="normal">Normal</option>
+      <option value="2" data-i18n="extreme">Ekstrem</option>
+    </select>
+  </label>
+
+  <label data-i18n="wrist">Pergelangan
+    <select id="wrist">
+      <option value="1" data-i18n="neutral">Netral</option>
+      <option value="2" data-i18n="twist">Menekuk / Twist</option>
+    </select>
+  </label>
 </section>
 
 <div class="action-bar">
-  <button onclick="calculateREBA()">Hitung REBA</button>
-  <button class="secondary" onclick="resetForm()">Reset</button>
+  <button data-i18n="calculate" onclick="calculateREBA()">Hitung</button>
 </div>
 
-<section id="result" class="card hidden">
-  <h2>HASIL AKHIR</h2>
-
-  <p>Task: <strong id="rTask"></strong></p>
-  <p>Reviewer: <strong id="rReviewer"></strong></p>
+<section class="card result">
+  <h2 data-i18n="result">Hasil</h2>
 
   <div class="scores">
-    <div>A<br><strong id="scoreA"></strong></div>
-    <div>B<br><strong id="scoreB"></strong></div>
-    <div>REBA<br><strong id="score"></strong></div>
+    <div>A<br><strong id="scoreA">0</strong></div>
+    <div>B<br><strong id="scoreB">0</strong></div>
+    <div>REBA<br><strong id="score">0</strong></div>
   </div>
 
   <div id="risk" class="risk-badge"></div>
   <p id="summary"></p>
-  <p id="recommendation"></p>
-
-  <button onclick="window.print()">Cetak / PDF</button>
 </section>
 
 </main>
