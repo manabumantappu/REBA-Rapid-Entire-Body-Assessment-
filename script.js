@@ -15,10 +15,27 @@ function calculateREBA(){
   set("resultTask", document.getElementById("taskName").value || "-");
   set("resultReviewer", document.getElementById("reviewer").value || "-");
 
-  const risk = document.getElementById("risk");
-  risk.innerText = getRisk(reba);
-  risk.style.background = getColor(reba);
-  risk.style.color = "#fff";
+ const risk = document.getElementById("risk");
+risk.className = "risk-badge " + getRiskClass(reba);
+risk.innerText = getRisk(reba);
+function getRiskClass(s){
+  if(s<=3) return "risk-low";
+  if(s<=6) return "risk-mid";
+  if(s<=9) return "risk-high";
+  return "risk-extreme";
+}
+saveHistory({
+  date:new Date().toLocaleString(),
+  task:document.getElementById("taskName").value,
+  reviewer:document.getElementById("reviewer").value,
+  score:reba,
+  risk:getRisk(reba)
+});
+function saveHistory(data){
+  let h=JSON.parse(localStorage.getItem("rebaHistory"))||[];
+  h.unshift(data);
+  localStorage.setItem("rebaHistory",JSON.stringify(h.slice(0,20)));
+}
 
   set("autoSummary", getSummary(reba));
   set("recommendation", getRecommendation(reba));
@@ -62,3 +79,18 @@ function getRecommendation(s){
 function resetForm(){
   location.reload();
 }
+document.querySelectorAll("select,input").forEach(el=>{
+  el.addEventListener("change", calculateREBA);
+});
+const toggle = document.getElementById("themeToggle");
+
+if(localStorage.getItem("theme")==="dark"){
+  document.body.classList.add("dark");
+}
+
+toggle.onclick = ()=>{
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme",
+    document.body.classList.contains("dark")?"dark":"light"
+  );
+};
