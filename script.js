@@ -104,9 +104,8 @@ function calculateREBA() {
   const scoreB =
     tableB[upperArmScore - 1][lowerArmScore - 1][wristScore - 1] + coupling;
 
-  const finalScore =
-    tableC[scoreA - 1][scoreB - 1] + activity;
    highlightScoreA(neckScore, trunkScore, legsScore);
+   highlightScoreB(upperArmScore, lowerArmScore, wristScore);
 const taskName = document.getElementById("taskName").value || "-";
 const reviewer = document.getElementById("reviewer").value || "-";
 const safeA = clamp(scoreA, 1, tableC.length);
@@ -231,13 +230,14 @@ canvas.addEventListener("click", e => {
 
 
 function resetForm() {
-function resetForm() {
   document.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
   document.querySelectorAll("input[type=number], input[type=text]").forEach(i => i.value = "");
   document.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = false);
   document.getElementById("result").classList.add("hidden");
   clearHighlight();
+  clearHighlightB();
 }
+
 
 /* ===============================
    ANGLE → SCORE MAPPING (REBA)
@@ -361,6 +361,38 @@ function highlightScoreA(neckScore, trunkScore, legsScore) {
   ];
 
   const max = Math.max(neckScore, trunkScore, legsScore);
+
+  scores.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (!el) return;
+
+    if (s.value === max && max >= 3) {
+      el.classList.add("highlight-danger");
+    } else if (s.value === max && max === 2) {
+      el.classList.add("highlight-warning");
+    }
+  });
+}
+// =========================
+// HIGHLIGHT SCORE B
+// =========================
+function clearHighlightB() {
+  ["upperarmBlock", "lowerarmBlock", "wristBlock"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("highlight-danger", "highlight-warning");
+  });
+}
+
+function highlightScoreB(upper, lower, wrist) {
+  clearHighlightB();
+
+  const scores = [
+    { id: "upperarmBlock", value: upper },
+    { id: "lowerarmBlock", value: lower },
+    { id: "wristBlock", value: wrist }
+  ];
+
+  const max = Math.max(upper, lower, wrist);
 
   scores.forEach(s => {
     const el = document.getElementById(s.id);
