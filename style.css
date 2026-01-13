@@ -1,132 +1,42 @@
-body{
-  font-family:Arial, sans-serif;
-  margin:0;
-  background:#f4f6f8;
-}
-header, footer{
-  text-align:center;
-  padding:15px;
-  background:#1e88e5;
-  color:#fff;
-}
-.container{ padding:15px; }
-.card{
-  background:#fff;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:15px;
-}
-label{ display:block; margin-bottom:10px; }
-input, select{
-  width:100%;
-  padding:10px;
-  margin-top:5px;
-}
-.tip{ cursor:help; margin-left:5px; }
+body{margin:0;font-family:Arial;background:#f4f6f8}
+header,footer{background:#1565c0;color:#fff;text-align:center;padding:12px}
+.container{padding:15px}
+.card{background:#fff;padding:15px;border-radius:10px;margin-bottom:15px}
+label{display:block;margin-bottom:10px}
+input,select{width:100%;padding:10px;margin-top:5px}
 
-.action-bar{
-  position:sticky;
-  bottom:0;
-  background:#fff;
-  padding:10px;
-  display:flex;
-  gap:10px;
-}
-button{
-  flex:1;
-  padding:12px;
-  font-size:16px;
-}
-.secondary{ background:#ccc; }
+.action-bar{position:sticky;bottom:0;display:flex;gap:10px;background:#fff;padding:10px}
+button{flex:1;padding:12px;font-size:16px}
+.secondary{background:#ccc}
 
-.hidden{ display:none; }
+.hidden{display:none}
 
-.score-box{
-  display:flex;
-  justify-content:space-around;
-  margin:15px 0;
-  text-align:center;
-}
-.score-box strong{
-  font-size:28px;
-}
+.scores{display:flex;justify-content:space-around;text-align:center;margin:15px 0}
+.scores strong{font-size:28px}
 
-.risk{
-  font-weight:bold;
-  padding:10px;
-  border-radius:6px;
-}
-/* ===== DARK MODE ===== */
-body.dark{
-  background:#121212;
-  color:#eee;
-}
-body.dark .card,
-body.dark .action-bar{
-  background:#1e1e1e;
-}
-body.dark input,
-body.dark select{
-  background:#2a2a2a;
-  color:#fff;
-}
-
-/* ===== TOOLTIP ===== */
-.tooltip{
-  position:relative;
-  cursor:pointer;
-}
+.tooltip{cursor:help;position:relative}
 .tooltip::after{
   content:attr(data-tip);
-  position:absolute;
-  bottom:120%;
-  left:50%;
+  position:absolute;bottom:120%;left:50%;
   transform:translateX(-50%);
-  background:#333;
-  color:#fff;
-  padding:6px 8px;
-  border-radius:4px;
-  font-size:12px;
-  white-space:nowrap;
-  opacity:0;
-  pointer-events:none;
-  transition:.2s;
+  background:#333;color:#fff;
+  padding:6px;border-radius:4px;
+  opacity:0;transition:.2s;white-space:nowrap
 }
-.tooltip:hover::after,
-.tooltip:active::after{
-  opacity:1;
-}
+.tooltip:hover::after{opacity:1}
 
-/* ===== RISK BADGE ===== */
-.risk-badge{
-  padding:12px;
-  border-radius:8px;
-  font-weight:bold;
-  text-align:center;
-  margin:10px 0;
-}
-.risk-low{ background:#2e7d32;color:#fff; }
-.risk-mid{ background:#f9a825;color:#000; }
-.risk-high{ background:#ef6c00;color:#fff; }
-.risk-extreme{ background:#c62828;color:#fff; }
+.risk-badge{padding:10px;border-radius:8px;font-weight:bold;text-align:center}
+.risk-low{background:#2e7d32;color:#fff}
+.risk-mid{background:#f9a825}
+.risk-high{background:#ef6c00;color:#fff}
+.risk-extreme{background:#c62828;color:#fff}
 
-/* ===== THEME BUTTON ===== */
-.theme-btn{
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-size:18px;
-}
+body.dark{background:#121212;color:#eee}
+body.dark .card,body.dark .action-bar{background:#1e1e1e}
+body.dark input,body.dark select{background:#2a2a2a;color:#fff}
+
 @media print{
-  header, .action-bar, button{
-    display:none;
-  }
-  body{
-    background:#fff;
-    color:#000;
-  }
-  .card{
-    box-shadow:none;
-    border:1px solid #000;
-  }
+  header,.action-bar,button{display:none}
+  body{background:#fff;color:#000}
+  .card{box-shadow:none;border:1px solid #000}
 }
