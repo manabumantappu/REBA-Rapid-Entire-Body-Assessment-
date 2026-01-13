@@ -123,3 +123,16 @@ ul#history li {
   h1 { font-size: 20px; }
   button { font-size: 14px; }
 }
+canvas {
+  width: 100%;
+  max-height: 400px;
+  border: 2px dashed #999;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.hint {
+  font-size: 12px;
+  color: #777;
+  margin-top: 5px;
+}
