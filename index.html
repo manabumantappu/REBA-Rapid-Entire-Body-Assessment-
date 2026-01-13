@@ -17,6 +17,14 @@
 <main class="container">
 <section>
   <h2>Upload Foto Postur</h2>
+  <label>Nama Task / Pekerjaan
+  <input type="text" id="taskName" placeholder="contoh: Angkat Box Gudang">
+</label>
+
+<label>Reviewer / Penilai
+  <input type="text" id="reviewer" placeholder="contoh: Andi / HSE Officer">
+</label>
+
   <input type="file" accept="image/*" id="photoInput">
   <canvas id="canvas"></canvas>
   <p class="hint">Klik pada foto untuk menandai titik tubuh</p>
@@ -269,6 +277,8 @@
   <section id="result" class="result hidden">
   <h2>Hasil Analisa</h2>
 
+  <p>Task: <strong id="resultTask"></strong></p>
+  <p>Reviewer: <strong id="resultReviewer"></strong></p>
   <p>Score A (Postur A): <strong id="scoreA"></strong></p>
   <p>Score B (Postur B): <strong id="scoreB"></strong></p>
 
