@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANALISA REBA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>ANALISA REBA</h1>
+  <p>Rapid Entire Body Assessment</p>
+</header>
+
+<main class="container">
+
+  <section>
+    <h2>Grup A</h2>
+    <label>Leher
+      <select id="neck">
+        <option value="1">Netral</option>
+        <option value="2">Menunduk / menengadah</option>
+        <option value="3">Memutar / miring</option>
+      </select>
+    </label>
+
+    <label>Punggung
+      <select id="trunk">
+        <option value="1">Tegak</option>
+        <option value="2">Membungkuk ringan</option>
+        <option value="3">Membungkuk berat / memutar</option>
+      </select>
+    </label>
+
+    <label>Kaki
+      <select id="legs">
+        <option value="1">Stabil</option>
+        <option value="2">Tidak stabil / bertumpu satu kaki</option>
+      </select>
+    </label>
+  </section>
+
+  <section>
+    <h2>Grup B</h2>
+    <label>Lengan Atas
+      <select id="upperArm">
+        <option value="1">Netral</option>
+        <option value="2">Terangkat</option>
+        <option value="3">Di atas bahu</option>
+      </select>
+    </label>
+
+    <label>Lengan Bawah
+      <select id="lowerArm">
+        <option value="1">Sudut normal</option>
+        <option value="2">Sudut ekstrem</option>
+      </select>
+    </label>
+
+    <label>Pergelangan Tangan
+      <select id="wrist">
+        <option value="1">Netral</option>
+        <option value="2">Menekuk / memutar</option>
+      </select>
+    </label>
+  </section>
+
+  <section>
+    <h2>Faktor Tambahan</h2>
+    <label>Beban
+      <select id="load">
+        <option value="0">&lt; 5 kg</option>
+        <option value="1">5–10 kg</option>
+        <option value="2">&gt; 10 kg</option>
+      </select>
+    </label>
+
+    <label>Aktivitas
+      <select id="activity">
+        <option value="0">Normal</option>
+        <option value="1">Berulang / statis</option>
+      </select>
+    </label>
+  </section>
+
+  <button onclick="calculateREBA()">Hitung REBA</button>
+  <button class="secondary" onclick="resetForm()">Reset</button>
+
+  <section id="result" class="result hidden">
+    <h2>Hasil Analisa</h2>
+    <p>Skor REBA: <strong id="score"></strong></p>
+    <p>Tingkat Risiko: <strong id="risk"></strong></p>
+    <p id="recommendation"></p>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 ANALISA REBA | GitHub Pages Ready</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
