@@ -366,10 +366,20 @@ function clearHighlight() {
 function highlightScoreA(neckScore, trunkScore, legsScore) {
   clearHighlight();
 
+  const trunkReasons = [];
+  const neckReasons = [];
+  const legsReasons = [];
+
+  if (isChecked("trunkTwist")) trunkReasons.push("Trunk twisted");
+  if (isChecked("trunkSide")) trunkReasons.push("Trunk side bending");
+
+  if (isChecked("neckTwist")) neckReasons.push("Neck twisted");
+  if (isChecked("neckSide")) neckReasons.push("Neck side bending");
+
   const scores = [
-    { id: "neckBlock", value: neckScore },
-    { id: "trunkBlock", value: trunkScore },
-    { id: "legsBlock", value: legsScore }
+    { id: "neckBlock", value: neckScore, reasons: neckReasons },
+    { id: "trunkBlock", value: trunkScore, reasons: trunkReasons },
+    { id: "legsBlock", value: legsScore, reasons: [] }
   ];
 
   const max = Math.max(neckScore, trunkScore, legsScore);
@@ -380,28 +390,35 @@ function highlightScoreA(neckScore, trunkScore, legsScore) {
 
     if (s.value === max && max >= 3) {
       el.classList.add("highlight-danger");
+      setTooltip(s.id, s.reasons);
     } else if (s.value === max && max === 2) {
       el.classList.add("highlight-warning");
+      setTooltip(s.id, s.reasons);
+    } else {
+      setTooltip(s.id, []);
     }
   });
 }
+
 // =========================
 // HIGHLIGHT SCORE B
 // =========================
-function clearHighlightB() {
-  ["upperarmBlock", "lowerarmBlock", "wristBlock"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.remove("highlight-danger", "highlight-warning");
-  });
-}
-
 function highlightScoreB(upper, lower, wrist) {
   clearHighlightB();
 
+  const upperReasons = [];
+  const wristReasons = [];
+
+  if (isChecked("shoulderRaised")) upperReasons.push("Shoulder raised");
+  if (isChecked("upperAbducted")) upperReasons.push("Upper arm abducted");
+  if (isChecked("armSupported")) upperReasons.push("Arm not supported");
+
+  if (isChecked("wristTwist")) wristReasons.push("Wrist bent / twisted");
+
   const scores = [
-    { id: "upperarmBlock", value: upper },
-    { id: "lowerarmBlock", value: lower },
-    { id: "wristBlock", value: wrist }
+    { id: "upperarmBlock", value: upper, reasons: upperReasons },
+    { id: "lowerarmBlock", value: lower, reasons: [] },
+    { id: "wristBlock", value: wrist, reasons: wristReasons }
   ];
 
   const max = Math.max(upper, lower, wrist);
@@ -412,11 +429,18 @@ function highlightScoreB(upper, lower, wrist) {
 
     if (s.value === max && max >= 3) {
       el.classList.add("highlight-danger");
-    } else if (s.value === max && max === 2) {
+      setTooltip(s.id, s.reasons);
+    } 
+    else if (s.value === max && max === 2) {
       el.classList.add("highlight-warning");
+      setTooltip(s.id, s.reasons);
+    } 
+    else {
+      setTooltip(s.id, []);
     }
   });
 }
+
 function setTooltip(id, messages) {
   const el = document.getElementById(id);
   if (!el) return;
