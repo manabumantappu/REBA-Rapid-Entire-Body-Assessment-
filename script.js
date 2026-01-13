@@ -196,3 +196,5 @@ function resetForm() {
   document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
   document.getElementById("result").classList.add("hidden");
 }
+document.getElementById("reportDate").textContent =
+  new Date().toLocaleDateString();
