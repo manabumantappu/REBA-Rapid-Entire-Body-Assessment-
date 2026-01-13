@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ANALISA REBA</title>
 <link rel="stylesheet" href="style.css">
+
+<button id="themeToggle" class="theme-btn">🌙</button>
+
 </head>
 
 <body>
@@ -33,7 +36,7 @@
   <h2>Grup A (Leher, Punggung, Kaki)</h2>
 
   <label>Leher
-    <span class="tip" title="Posisi leher saat bekerja">ℹ️</span>
+   <span class="tooltip" data-tip="Posisi leher saat bekerja">ℹ️</span>
     <select id="neck">
       <option value="1">Netral</option>
       <option value="2">Menunduk / ekstensi</option>
@@ -129,8 +132,8 @@
     <div>Score B<br><strong id="scoreB">-</strong></div>
     <div>REBA<br><strong id="score">-</strong></div>
   </div>
-
-  <p class="risk" id="risk"></p>
+  
+<div class="risk-badge" id="risk"></div>
   <p id="autoSummary"></p>
   <p id="recommendation"></p>
 </section>
