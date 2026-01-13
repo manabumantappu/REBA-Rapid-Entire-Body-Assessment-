@@ -74,22 +74,25 @@ if (localStorage.getItem("theme") === "true") {
 function calculateREBA() {
   const v = id => +document.getElementById(id).value;
 
-  const neck = v("neck") - 1;
-  const trunk = v("trunk") - 1;
-  const legs = v("legs") - 1;
+let neckScore = v("neck");
+let trunkScore = v("trunk");
+let upperArmScore = v("upperArm");
+let wristScore = v("wrist");
 
-  const upper = v("upperArm") - 1;
-  const lower = v("lowerArm") - 1;
-  const wrist = v("wrist") - 1;
+neckScore = adjustNeck(neckScore);
+trunkScore = adjustTrunk(trunkScore);
+upperArmScore = adjustUpperArm(upperArmScore);
+wristScore = adjustWrist(wristScore);
+
 
   const load = v("load");
   const coupling = v("coupling");
   const activity = v("activity");
 
-  const scoreA = tableA[neck][trunk][legs] + load;
-  const scoreB = tableB[upper][lower][wrist] + coupling;
-
-  const finalScore = tableC[scoreA-1][scoreB-1] + activity;
+ const scoreA = tableA[neckScore-1][trunkScore-1][legs] + load;
+ const scoreB = tableB[upperArmScore-1][lower][wristScore-1] + coupling;
+  
+   const finalScore = tableC[scoreA-1][scoreB-1] + activity;
 
   let risk, rec;
   if (finalScore <= 1) {
@@ -271,4 +274,33 @@ syncAngleToSelect("trunkAngle", "trunk", mapTrunk);
 syncAngleToSelect("upperArmAngle", "upperArm", mapUpperArm);
 syncAngleToSelect("lowerArmAngle", "lowerArm", mapLowerArm);
 syncAngleToSelect("wristAngle", "wrist", mapWrist);
+
+function isChecked(id) {
+  const el = document.getElementById(id);
+  return el && el.checked;
+}
+
+function adjustNeck(score) {
+  if (isChecked("neckTwist")) score += 1;
+  if (isChecked("neckSide")) score += 1;
+  return score;
+}
+
+function adjustTrunk(score) {
+  if (isChecked("trunkTwist")) score += 1;
+  if (isChecked("trunkSide")) score += 1;
+  return score;
+}
+
+function adjustUpperArm(score) {
+  if (isChecked("shoulderRaised")) score += 1;
+  if (isChecked("upperAbducted")) score += 1;
+  if (isChecked("armSupported")) score -= 1;
+  return score < 1 ? 1 : score;
+}
+
+function adjustWrist(score) {
+  if (isChecked("wristTwist")) score += 1;
+  return score;
+}
 
