@@ -198,3 +198,57 @@ function resetForm() {
 }
 document.getElementById("reportDate").textContent =
   new Date().toLocaleDateString();
+/* ===============================
+   ANGLE → SCORE MAPPING (REBA)
+================================ */
+
+// NECK
+function mapNeck(angle) {
+  if (angle === null || angle === "") return null;
+  angle = Math.abs(angle);
+
+  if (angle <= 20) return 1;
+  if (angle <= 45) return 2;
+  return 3;
+}
+
+// TRUNK
+function mapTrunk(angle) {
+  if (angle === null || angle === "") return null;
+  angle = Math.abs(angle);
+
+  if (angle <= 5) return 1;
+  if (angle <= 20) return 2;
+  if (angle <= 60) return 3;
+  return 4;
+}
+
+// UPPER ARM
+function mapUpperArm(angle) {
+  if (angle === null || angle === "") return null;
+  angle = Math.abs(angle);
+
+  if (angle <= 20) return 1;
+  if (angle <= 45) return 2;
+  if (angle <= 90) return 3;
+  return 4;
+}
+
+// LOWER ARM
+function mapLowerArm(angle) {
+  if (angle === null || angle === "") return null;
+  angle = Math.abs(angle);
+
+  if (angle >= 60 && angle <= 100) return 1;
+  return 2;
+}
+
+// WRIST
+function mapWrist(angle) {
+  if (angle === null || angle === "") return null;
+  angle = Math.abs(angle);
+
+  if (angle <= 15) return 1;
+  return 2;
+}
+
