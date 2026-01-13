@@ -107,6 +107,11 @@ function calculateREBA() {
   const finalScore =
     tableC[scoreA - 1][scoreB - 1] + activity;
    highlightScoreA(neckScore, trunkScore, legsScore);
+const taskName = document.getElementById("taskName").value || "-";
+const reviewer = document.getElementById("reviewer").value || "-";
+
+document.getElementById("resultTask").textContent = taskName;
+document.getElementById("resultReviewer").textContent = reviewer;
 
    // 👉 TAMPILKAN SCORE A & B
    document.getElementById("scoreA").textContent = scoreA;
@@ -147,7 +152,10 @@ function clamp(val, min, max) {
 function saveHistory(score, risk) {
   historyData.unshift({
     date: new Date().toLocaleString(),
-    score, risk
+    task: document.getElementById("taskName").value || "-",
+    reviewer: document.getElementById("reviewer").value || "-",
+    score,
+    risk
   });
   localStorage.setItem("rebaHistory", JSON.stringify(historyData));
   renderHistory();
@@ -158,18 +166,19 @@ function renderHistory() {
   ul.innerHTML = "";
   historyData.forEach(h => {
     const li = document.createElement("li");
-    li.textContent = `${h.date} | Skor ${h.score} | ${h.risk}`;
-    ul.appendChild(li);
+   li.textContent = `${h.date} | ${h.task} | Skor ${h.score} | ${h.risk} | Reviewer: ${h.reviewer}`;
+   ul.appendChild(li);
   });
 }
 renderHistory();
 
 // =========================
 function exportCSV() {
-  let csv = "Tanggal,Skor,Risiko\n";
-  historyData.forEach(h=>{
-    csv += `${h.date},${h.score},${h.risk}\n`;
-  });
+ let csv = "Tanggal,Task,Reviewer,Skor,Risiko\n";
+historyData.forEach(h=>{
+  csv += `${h.date},${h.task},${h.reviewer},${h.score},${h.risk}\n`;
+});
+
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([csv]));
   a.download = "reba_valid.csv";
