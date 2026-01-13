@@ -74,25 +74,38 @@ if (localStorage.getItem("theme") === "true") {
 function calculateREBA() {
   const v = id => +document.getElementById(id).value;
 
-let neckScore = v("neck");
-let trunkScore = v("trunk");
-let upperArmScore = v("upperArm");
-let wristScore = v("wrist");
+  let neckScore = v("neck");
+  let trunkScore = v("trunk");
+  let legsScore = v("legs");
 
-neckScore = adjustNeck(neckScore);
-trunkScore = adjustTrunk(trunkScore);
-upperArmScore = adjustUpperArm(upperArmScore);
-wristScore = adjustWrist(wristScore);
+  let upperArmScore = v("upperArm");
+  let lowerArmScore = v("lowerArm");
+  let wristScore = v("wrist");
 
+  neckScore = adjustNeck(neckScore);
+  trunkScore = adjustTrunk(trunkScore);
+  upperArmScore = adjustUpperArm(upperArmScore);
+  wristScore = adjustWrist(wristScore);
+
+  neckScore = clamp(neckScore, 1, 3);
+  trunkScore = clamp(trunkScore, 1, 5);
+  legsScore = clamp(legsScore, 1, 4);
+  upperArmScore = clamp(upperArmScore, 1, 3);
+  lowerArmScore = clamp(lowerArmScore, 1, 2);
+  wristScore = clamp(wristScore, 1, 3);
 
   const load = v("load");
   const coupling = v("coupling");
   const activity = v("activity");
 
- const scoreA = tableA[neckScore-1][trunkScore-1][legs] + load;
- const scoreB = tableB[upperArmScore-1][lower][wristScore-1] + coupling;
-  
-   const finalScore = tableC[scoreA-1][scoreB-1] + activity;
+  const scoreA =
+    tableA[neckScore - 1][trunkScore - 1][legsScore - 1] + load;
+
+  const scoreB =
+    tableB[upperArmScore - 1][lowerArmScore - 1][wristScore - 1] + coupling;
+
+  const finalScore =
+    tableC[scoreA - 1][scoreB - 1] + activity;
 
   let risk, rec;
   if (finalScore <= 1) {
@@ -118,6 +131,9 @@ wristScore = adjustWrist(wristScore);
   document.getElementById("result").classList.remove("hidden");
 
   saveHistory(finalScore, risk);
+}
+function clamp(val, min, max) {
+  return Math.max(min, Math.min(max, val));
 }
 
 // =========================
