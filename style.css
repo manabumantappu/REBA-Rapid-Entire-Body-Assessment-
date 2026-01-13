@@ -117,3 +117,16 @@ body.dark select{
   right:10px;
   font-size:18px;
 }
+@media print{
+  header, .action-bar, button{
+    display:none;
+  }
+  body{
+    background:#fff;
+    color:#000;
+  }
+  .card{
+    box-shadow:none;
+    border:1px solid #000;
+  }
+}
