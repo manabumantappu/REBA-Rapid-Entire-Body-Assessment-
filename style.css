@@ -56,3 +56,64 @@ button{
   padding:10px;
   border-radius:6px;
 }
+/* ===== DARK MODE ===== */
+body.dark{
+  background:#121212;
+  color:#eee;
+}
+body.dark .card,
+body.dark .action-bar{
+  background:#1e1e1e;
+}
+body.dark input,
+body.dark select{
+  background:#2a2a2a;
+  color:#fff;
+}
+
+/* ===== TOOLTIP ===== */
+.tooltip{
+  position:relative;
+  cursor:pointer;
+}
+.tooltip::after{
+  content:attr(data-tip);
+  position:absolute;
+  bottom:120%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#333;
+  color:#fff;
+  padding:6px 8px;
+  border-radius:4px;
+  font-size:12px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+}
+.tooltip:hover::after,
+.tooltip:active::after{
+  opacity:1;
+}
+
+/* ===== RISK BADGE ===== */
+.risk-badge{
+  padding:12px;
+  border-radius:8px;
+  font-weight:bold;
+  text-align:center;
+  margin:10px 0;
+}
+.risk-low{ background:#2e7d32;color:#fff; }
+.risk-mid{ background:#f9a825;color:#000; }
+.risk-high{ background:#ef6c00;color:#fff; }
+.risk-extreme{ background:#c62828;color:#fff; }
+
+/* ===== THEME BUTTON ===== */
+.theme-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  font-size:18px;
+}
