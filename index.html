@@ -11,6 +11,7 @@
 <header>
   <h1>ANALISA REBA</h1>
   <p>Rapid Entire Body Assessment</p>
+  <button id="themeToggle">🌙 Dark Mode</button>
 </header>
 
 <main class="container">
@@ -94,6 +95,11 @@
     <p id="recommendation"></p>
   </section>
 
+  <section>
+  <h2>Riwayat Penilaian</h2>
+  <button class="secondary" onclick="exportCSV()">Export CSV</button>
+  <ul id="history"></ul>
+</section>
 </main>
 
 <footer>
