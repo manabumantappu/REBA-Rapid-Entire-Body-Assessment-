@@ -455,3 +455,21 @@ function setTooltip(id, messages) {
   }
 }
 
+function generateSummary(data) {
+  if (data.length === 0) {
+    return "Risiko rendah, tidak ada bagian tubuh dominan yang berbahaya.";
+  }
+
+  const parts = data.map(d => `${d.label} (Skor ${d.score})`).join(" dan ");
+  const reasons = data
+    .flatMap(d => d.reasons)
+    .filter((v, i, a) => a.indexOf(v) === i);
+
+  let text = `Risiko utama disebabkan oleh ${parts}.`;
+
+  if (reasons.length > 0) {
+    text += ` Faktor penyebab: ${reasons.join(", ")}.`;
+  }
+
+  return text;
+}
