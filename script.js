@@ -118,6 +118,48 @@ document.getElementById("wristScoreText").textContent = wristScore;
 
    highlightScoreA(neckScore, trunkScore, legsScore);
    highlightScoreB(upperArmScore, lowerArmScore, wristScore);
+
+   const summaryData = [];
+
+// Grup A
+if (neckScore >= 3)
+  summaryData.push({ label: "Leher", score: neckScore, reasons: ["Neck posture"] });
+
+if (trunkScore >= 3)
+  summaryData.push({
+    label: "Punggung",
+    score: trunkScore,
+    reasons: [
+      isChecked("trunkTwist") ? "Trunk twisted" : null,
+      isChecked("trunkSide") ? "Trunk side bending" : null
+    ].filter(Boolean)
+  });
+
+if (legsScore >= 3)
+  summaryData.push({ label: "Kaki", score: legsScore, reasons: [] });
+
+// Grup B
+if (upperArmScore >= 3)
+  summaryData.push({
+    label: "Lengan Atas",
+    score: upperArmScore,
+    reasons: [
+      isChecked("shoulderRaised") ? "Shoulder raised" : null,
+      isChecked("upperAbducted") ? "Upper arm abducted" : null
+    ].filter(Boolean)
+  });
+
+if (wristScore >= 3)
+  summaryData.push({
+    label: "Pergelangan",
+    score: wristScore,
+    reasons: isChecked("wristTwist") ? ["Wrist bent / twisted"] : []
+  });
+
+// TAMPILKAN
+document.getElementById("autoSummary").textContent =
+  "Ringkasan Risiko: " + generateSummary(summaryData);
+
 const taskName = document.getElementById("taskName").value || "-";
 const reviewer = document.getElementById("reviewer").value || "-";
 const safeA = clamp(scoreA, 1, tableC.length);
