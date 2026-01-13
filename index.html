@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ANALISA REBA</title>
 <link rel="stylesheet" href="style.css">
-
-<button id="themeToggle" class="theme-btn">🌙</button>
-
 </head>
 
 <body>
@@ -15,28 +12,25 @@
 <header>
   <h1>ANALISA REBA</h1>
   <p>Rapid Entire Body Assessment</p>
-  <p>PT HANKEN INDONESIA</p>
+  <button id="themeToggle">🌙</button>
 </header>
 
 <main class="container">
 
 <section class="card">
   <h2>Informasi Penilaian</h2>
-
-  <label>Nama Task / Pekerjaan
-    <input type="text" id="taskName" placeholder="Contoh: Angkat Box Gudang">
+  <label>Task / Pekerjaan
+    <input id="taskName" placeholder="Contoh: Angkat Box Gudang">
   </label>
-
   <label>Reviewer / Penilai
-    <input type="text" id="reviewer" placeholder="Contoh: Santoso / Kaizen">
+    <input id="reviewer" placeholder="Contoh: Santoso">
   </label>
 </section>
 
 <section class="card">
-  <h2>Grup A (Leher, Punggung, Kaki)</h2>
+  <h2>Group A</h2>
 
-  <label>Leher
-   <span class="tooltip" data-tip="Posisi leher saat bekerja">ℹ️</span>
+  <label>Leher <span class="tooltip" data-tip="Posisi leher saat bekerja">ℹ️</span>
     <select id="neck">
       <option value="1">Netral</option>
       <option value="2">Menunduk / ekstensi</option>
@@ -45,7 +39,6 @@
   </label>
 
   <label>Punggung
-    <span class="tip" title="Sudut fleksi punggung">ℹ️</span>
     <select id="trunk">
       <option value="1">Tegak</option>
       <option value="2">Membungkuk ringan</option>
@@ -54,7 +47,6 @@
   </label>
 
   <label>Kaki
-    <span class="tip" title="Stabilitas kaki saat bekerja">ℹ️</span>
     <select id="legs">
       <option value="1">Stabil</option>
       <option value="2">Tidak stabil</option>
@@ -62,7 +54,6 @@
   </label>
 
   <label>Beban
-    <span class="tip" title="Berat beban yang diangkat">ℹ️</span>
     <select id="load">
       <option value="0">&lt; 5 kg</option>
       <option value="1">5–10 kg</option>
@@ -72,7 +63,7 @@
 </section>
 
 <section class="card">
-  <h2>Grup B (Lengan & Pergelangan)</h2>
+  <h2>Group B</h2>
 
   <label>Lengan Atas
     <select id="upperArm">
@@ -107,35 +98,33 @@
 
 <section class="card">
   <h2>Aktivitas</h2>
-  <label>
-    <select id="activity">
-      <option value="0">Normal</option>
-      <option value="1">Berulang / statis</option>
-    </select>
-  </label>
+  <select id="activity">
+    <option value="0">Normal</option>
+    <option value="1">Berulang / statis</option>
+  </select>
 </section>
 
-<!-- MOBILE ACTION BAR -->
 <div class="action-bar">
   <button onclick="calculateREBA()">Hitung REBA</button>
   <button class="secondary" onclick="resetForm()">Reset</button>
 </div>
 
-<section id="result" class="card result hidden">
+<section id="result" class="card hidden">
   <h2>Hasil Analisa</h2>
+  <p>Task: <strong id="rTask"></strong></p>
+  <p>Reviewer: <strong id="rReviewer"></strong></p>
 
-  <p>Task: <strong id="resultTask"></strong></p>
-  <p>Reviewer: <strong id="resultReviewer"></strong></p>
-
-  <div class="score-box">
-    <div>Score A<br><strong id="scoreA">-</strong></div>
-    <div>Score B<br><strong id="scoreB">-</strong></div>
+  <div class="scores">
+    <div>A<br><strong id="scoreA">-</strong></div>
+    <div>B<br><strong id="scoreB">-</strong></div>
     <div>REBA<br><strong id="score">-</strong></div>
   </div>
-  
-<div class="risk-badge" id="risk"></div>
-  <p id="autoSummary"></p>
+
+  <div id="risk" class="risk-badge"></div>
+  <p id="summary"></p>
   <p id="recommendation"></p>
+
+  <button onclick="window.print()">Cetak / PDF</button>
 </section>
 
 </main>
