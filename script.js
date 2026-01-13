@@ -251,4 +251,24 @@ function mapWrist(angle) {
   if (angle <= 15) return 1;
   return 2;
 }
+function syncAngleToSelect(angleId, selectId, mapper) {
+  const angleInput = document.getElementById(angleId);
+  const select = document.getElementById(selectId);
+
+  if (!angleInput || !select) return;
+
+  angleInput.addEventListener("input", () => {
+    const score = mapper(angleInput.value);
+    if (score !== null) {
+      select.value = score;
+    }
+  });
+}
+
+// HUBUNGKAN
+syncAngleToSelect("neckAngle", "neck", mapNeck);
+syncAngleToSelect("trunkAngle", "trunk", mapTrunk);
+syncAngleToSelect("upperArmAngle", "upperArm", mapUpperArm);
+syncAngleToSelect("lowerArmAngle", "lowerArm", mapLowerArm);
+syncAngleToSelect("wristAngle", "wrist", mapWrist);
 
