@@ -107,6 +107,9 @@ function calculateREBA() {
   const finalScore =
     tableC[scoreA - 1][scoreB - 1] + activity;
 
+   document.getElementById("scoreA").textContent = scoreA;
+document.getElementById("scoreB").textContent = scoreB;
+   
   let risk, rec;
   if (finalScore <= 1) {
     risk = "Sangat Rendah";
