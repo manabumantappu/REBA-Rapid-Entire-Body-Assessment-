@@ -136,3 +136,24 @@ canvas {
   color: #777;
   margin-top: 5px;
 }
+.step {
+  margin-bottom: 14px;
+}
+
+.step img {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin: 6px 0;
+}
+
+.step h3 {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.step-note {
+  font-size: 13px;
+  color: #555;
+}
