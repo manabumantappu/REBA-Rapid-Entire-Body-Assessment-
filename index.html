@@ -19,73 +19,100 @@
 
 <section class="card">
   <h2>Informasi Penilaian</h2>
-  <label>Task / Pekerjaan
+  <label>Task
     <input id="taskName" placeholder="Contoh: Angkat Box Gudang">
   </label>
-  <label>Reviewer / Penilai
+  <label>Reviewer
     <input id="reviewer" placeholder="Contoh: Santoso">
   </label>
 </section>
 
+<!-- ================= GROUP A ================= -->
 <section class="card">
-  <h2>Group A</h2>
+  <h2>GROUP A – POSTUR TUBUH</h2>
 
-  <label>Leher <span class="tooltip" data-tip="Posisi leher saat bekerja">ℹ️</span>
+  <!-- STEP 1 -->
+  <div class="step">
+    <h3>Step 1 – Neck</h3>
+    <img src="images/step1-neck.JPG">
     <select id="neck">
       <option value="1">Netral</option>
-      <option value="2">Menunduk / ekstensi</option>
-      <option value="3">Memutar / miring</option>
+      <option value="2">Fleksi / ekstensi</option>
+      <option value="3">Twist / side bend</option>
     </select>
-  </label>
+    <div class="step-score">Skor: <span id="sNeck">1</span></div>
+  </div>
 
-  <label>Punggung
+  <!-- STEP 2 -->
+  <div class="step">
+    <h3>Step 2 – Trunk</h3>
+    <img src="images/step2-trunk.JPG">
     <select id="trunk">
       <option value="1">Tegak</option>
-      <option value="2">Membungkuk ringan</option>
+      <option value="2">Membungkuk</option>
       <option value="3">Membungkuk berat</option>
     </select>
-  </label>
+    <div class="step-score">Skor: <span id="sTrunk">1</span></div>
+  </div>
 
-  <label>Kaki
+  <!-- STEP 3 -->
+  <div class="step">
+    <h3>Step 3 – Legs</h3>
+    <img src="images/step3-legs.JPG">
     <select id="legs">
       <option value="1">Stabil</option>
       <option value="2">Tidak stabil</option>
     </select>
-  </label>
+    <div class="step-score">Skor: <span id="sLegs">1</span></div>
+  </div>
 
   <label>Beban
     <select id="load">
-      <option value="0">&lt; 5 kg</option>
+      <option value="0">&lt;5 kg</option>
       <option value="1">5–10 kg</option>
-      <option value="2">&gt; 10 kg</option>
+      <option value="2">&gt;10 kg</option>
     </select>
   </label>
+
 </section>
 
+<!-- ================= GROUP B ================= -->
 <section class="card">
-  <h2>Group B</h2>
+  <h2>GROUP B – LENGAN</h2>
 
-  <label>Lengan Atas
+  <!-- STEP 7 -->
+  <div class="step">
+    <h3>Step 7 – Upper Arm</h3>
+    <img src="images/step7-upper-arm.JPG">
     <select id="upperArm">
       <option value="1">Netral</option>
       <option value="2">Terangkat</option>
       <option value="3">Di atas bahu</option>
     </select>
-  </label>
+    <div class="step-score">Skor: <span id="sUpper">1</span></div>
+  </div>
 
-  <label>Lengan Bawah
+  <!-- STEP 8 -->
+  <div class="step">
+    <h3>Step 8 – Lower Arm</h3>
+    <img src="images/step8-lower-arm.JPG">
     <select id="lowerArm">
       <option value="1">Normal</option>
       <option value="2">Ekstrem</option>
     </select>
-  </label>
+    <div class="step-score">Skor: <span id="sLower">1</span></div>
+  </div>
 
-  <label>Pergelangan
+  <!-- STEP 9 -->
+  <div class="step">
+    <h3>Step 9 – Wrist</h3>
+    <img src="images/step9-wrist.JPG">
     <select id="wrist">
       <option value="1">Netral</option>
-      <option value="2">Menekuk / memutar</option>
+      <option value="2">Menekuk / twist</option>
     </select>
-  </label>
+    <div class="step-score">Skor: <span id="sWrist">1</span></div>
+  </div>
 
   <label>Coupling
     <select id="coupling">
@@ -100,7 +127,7 @@
   <h2>Aktivitas</h2>
   <select id="activity">
     <option value="0">Normal</option>
-    <option value="1">Berulang / statis</option>
+    <option value="1">Statis / berulang</option>
   </select>
 </section>
 
@@ -110,14 +137,15 @@
 </div>
 
 <section id="result" class="card hidden">
-  <h2>Hasil Analisa</h2>
+  <h2>HASIL AKHIR</h2>
+
   <p>Task: <strong id="rTask"></strong></p>
   <p>Reviewer: <strong id="rReviewer"></strong></p>
 
   <div class="scores">
-    <div>A<br><strong id="scoreA">-</strong></div>
-    <div>B<br><strong id="scoreB">-</strong></div>
-    <div>REBA<br><strong id="score">-</strong></div>
+    <div>A<br><strong id="scoreA"></strong></div>
+    <div>B<br><strong id="scoreB"></strong></div>
+    <div>REBA<br><strong id="score"></strong></div>
   </div>
 
   <div id="risk" class="risk-badge"></div>
@@ -128,10 +156,6 @@
 </section>
 
 </main>
-
-<footer>
-  <p>© 2026 ANALISA REBA</p>
-</footer>
 
 <script src="script.js"></script>
 </body>
