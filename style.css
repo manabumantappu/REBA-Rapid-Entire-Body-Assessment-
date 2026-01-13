@@ -157,3 +157,17 @@ canvas {
   font-size: 13px;
   color: #555;
 }
+/* Highlight penyebab risiko */
+.highlight-danger {
+  border: 2px solid #e53935;
+  background: #ffebee;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.highlight-warning {
+  border: 2px solid #fb8c00;
+  background: #fff3e0;
+  padding: 8px;
+  border-radius: 6px;
+}
