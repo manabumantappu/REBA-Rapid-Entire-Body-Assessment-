@@ -417,4 +417,17 @@ function highlightScoreB(upper, lower, wrist) {
     }
   });
 }
+function setTooltip(id, messages) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  if (messages.length === 0) {
+    el.removeAttribute("data-tooltip");
+  } else {
+    el.setAttribute(
+      "data-tooltip",
+      "Skor tinggi karena:\n- " + messages.join("\n- ")
+    );
+  }
+}
 
