@@ -323,4 +323,36 @@ function adjustWrist(score) {
   if (isChecked("wristTwist")) score += 1;
   return score;
 }
+// =========================
+// HIGHLIGHT SCORE A
+// =========================
+function clearHighlight() {
+  ["neckBlock", "trunkBlock", "legsBlock"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("highlight-danger", "highlight-warning");
+  });
+}
+
+function highlightScoreA(neckScore, trunkScore, legsScore) {
+  clearHighlight();
+
+  const scores = [
+    { id: "neckBlock", value: neckScore },
+    { id: "trunkBlock", value: trunkScore },
+    { id: "legsBlock", value: legsScore }
+  ];
+
+  const max = Math.max(neckScore, trunkScore, legsScore);
+
+  scores.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (!el) return;
+
+    if (s.value === max && max >= 3) {
+      el.classList.add("highlight-danger");
+    } else if (s.value === max && max === 2) {
+      el.classList.add("highlight-warning");
+    }
+  });
+}
 
