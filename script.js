@@ -4,33 +4,52 @@ function v(id){
 
 function calculateREBA(){
 
-  const scoreA = v("neck")+v("trunk")+v("legs")+v("load");
-  const scoreB = v("upperArm")+v("lowerArm")+v("wrist")+v("coupling");
-  const reba   = scoreA + scoreB + v("activity");
+  // === INPUT ===
+  const neck  = v("neck");
+  const trunk = v("trunk");
+  const legs  = v("legs");
+  const load  = v("load");
 
-  set("scoreA", scoreA);
-  set("scoreB", scoreB);
+  const upper = v("upperArm");
+  const lower = v("lowerArm");
+  const wrist = v("wrist");
+  const coupling = v("coupling");
+
+  const activity = v("activity");
+
+  // === TABLE A & B ===
+  const postureA = tableA(neck, trunk, legs) + load;
+  const postureB = tableB(upper, lower, wrist) + coupling;
+
+  // === TABLE C ===
+  const reba = tableC(postureA, postureB) + activity;
+
+  // === OUTPUT ===
+  set("scoreA", postureA);
+  set("scoreB", postureB);
   set("score", reba);
 
-  set("resultTask", document.getElementById("taskName").value || "-");
-  set("resultReviewer", document.getElementById("reviewer").value || "-");
+  set("resultTask", taskName.value || "-");
+  set("resultReviewer", reviewer.value || "-");
 
- const risk = document.getElementById("risk");
-risk.className = "risk-badge " + getRiskClass(reba);
-risk.innerText = getRisk(reba);
-function getRiskClass(s){
-  if(s<=3) return "risk-low";
-  if(s<=6) return "risk-mid";
-  if(s<=9) return "risk-high";
-  return "risk-extreme";
+  const risk = document.getElementById("risk");
+  risk.className = "risk-badge " + getRiskClass(reba);
+  risk.innerText = getRisk(reba);
+
+  set("autoSummary", getSummary(reba));
+  set("recommendation", getRecommendation(reba));
+
+  document.getElementById("result").classList.remove("hidden");
+
+  saveHistory({
+    date: new Date().toLocaleDateString(),
+    task: taskName.value,
+    reviewer: reviewer.value,
+    score: reba,
+    risk: getRisk(reba)
+  });
 }
-saveHistory({
-  date:new Date().toLocaleString(),
-  task:document.getElementById("taskName").value,
-  reviewer:document.getElementById("reviewer").value,
-  score:reba,
-  risk:getRisk(reba)
-});
+
 function saveHistory(data){
   let h=JSON.parse(localStorage.getItem("rebaHistory"))||[];
   h.unshift(data);
@@ -94,3 +113,38 @@ toggle.onclick = ()=>{
     document.body.classList.contains("dark")?"dark":"light"
   );
 };
+/* =========================
+   TABLE A (SIMPLIFIED STRUCTURE)
+========================= */
+function tableA(neck, trunk, legs){
+  return neck + trunk + legs;
+}
+
+/* =========================
+   TABLE B (SIMPLIFIED STRUCTURE)
+========================= */
+function tableB(upper, lower, wrist){
+  return upper + lower + wrist;
+}
+
+/* =========================
+   TABLE C (FINAL REBA)
+========================= */
+function tableC(scoreA, scoreB){
+  return scoreA + scoreB;
+}
+function exportCSV(){
+  const data = JSON.parse(localStorage.getItem("rebaHistory")) || [];
+  if(!data.length){ alert("Belum ada data"); return; }
+
+  let csv = "Tanggal,Task,Reviewer,Score,Risiko\n";
+  data.forEach(d=>{
+    csv += `${d.date},${d.task},${d.reviewer},${d.score},${d.risk}\n`;
+  });
+
+  const blob = new Blob([csv],{type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "REBA_Report.csv";
+  a.click();
+}
