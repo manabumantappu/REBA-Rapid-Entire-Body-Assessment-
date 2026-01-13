@@ -106,7 +106,8 @@ function calculateREBA() {
 
   const finalScore =
     tableC[scoreA - 1][scoreB - 1] + activity;
-   
+   highlightScoreA(neckScore, trunkScore, legsScore);
+
    // 👉 TAMPILKAN SCORE A & B
    document.getElementById("scoreA").textContent = scoreA;
    document.getElementById("scoreB").textContent = scoreB;
