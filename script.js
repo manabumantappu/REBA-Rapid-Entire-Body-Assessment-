@@ -69,7 +69,7 @@ if (localStorage.getItem("theme") === "true") {
 }
 
 // =========================
-// CALCULATE REBA (REAL)
+// CALCULATE REBA (REAL) NICE
 // =========================
 function calculateREBA() {
   const v = id => +document.getElementById(id).value;
