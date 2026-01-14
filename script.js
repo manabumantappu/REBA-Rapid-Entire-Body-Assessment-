@@ -3,34 +3,42 @@ function clamp(value, min, max) {
 }
 
 function calculateREBA() {
-  const v = id => +document.getElementById(id).value;
+  const v = id => Number(document.getElementById(id)?.value);
 
-  let neckScore = adjustNeck(v("neck"));
-  let trunkScore = adjustTrunk(v("trunk"));
-  let legsScore = v("legs");
+  // Ambil nilai dasar
+  let neck = v("neck");
+  let trunk = v("trunk");
+  let legs = v("legs");
+  let upper = v("upperArm");
+  let lower = v("lowerArm");
+  let wrist = v("wrist");
 
-  let upperArmScore = adjustUpperArm(v("upperArm"));
-  let lowerArmScore = v("lowerArm");
-  let wristScore = adjustWrist(v("wrist"));
+  // VALIDASI WAJIB
+  if (![neck,trunk,legs,upper,lower,wrist].every(n => n >= 1)) {
+    alert("⚠️ Lengkapi semua penilaian postur terlebih dahulu.");
+    return;
+  }
 
-  const load = v("load");
-  const coupling = v("coupling");
-  const activity = v("activity");
+  // Adjust
+  neck = adjustNeck(neck);
+  trunk = adjustTrunk(trunk);
+  upper = adjustUpperArm(upper);
+  wrist = adjustWrist(wrist);
 
-  // CLAMP sesuai tabel REBA
-  neckScore = clamp(neckScore, 1, 3);
-  trunkScore = clamp(trunkScore, 1, 5);
-  legsScore = clamp(legsScore, 1, 4);
+  const load = v("load") || 0;
+  const coupling = v("coupling") || 0;
+  const activity = v("activity") || 0;
 
-  upperArmScore = clamp(upperArmScore, 1, 3);
-  lowerArmScore = clamp(lowerArmScore, 1, 2);
-  wristScore = clamp(wristScore, 1, 3);
+  // Clamp aman
+  neck = clamp(neck,1,3);
+  trunk = clamp(trunk,1,5);
+  legs = clamp(legs,1,4);
+  upper = clamp(upper,1,3);
+  lower = clamp(lower,1,2);
+  wrist = clamp(wrist,1,3);
 
-  const scoreA =
-    tableA[neckScore - 1][trunkScore - 1][legsScore - 1] + load;
-
-  const scoreB =
-    tableB[upperArmScore - 1][lowerArmScore - 1][wristScore - 1] + coupling;
+  const scoreA = tableA[neck-1][trunk-1][legs-1] + load;
+  const scoreB = tableB[upper-1][lower-1][wrist-1] + coupling;
 
   const finalScore =
     tableC[clamp(scoreA,1,8)-1][clamp(scoreB,1,7)-1] + activity;
@@ -53,6 +61,7 @@ function calculateREBA() {
     rec = "Tindakan harus dilakukan SEKARANG.";
   }
 
+  // TAMPILKAN HASIL
   document.getElementById("score").textContent = finalScore;
   document.getElementById("risk").textContent = risk;
   document.getElementById("recommendation").textContent = rec;
