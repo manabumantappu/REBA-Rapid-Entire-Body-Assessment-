@@ -119,6 +119,12 @@ function calculateREBA() {
   document.getElementById("recommendation").textContent = rec;
   document.getElementById("result").classList.remove("hidden");
 
+const task = document.getElementById("taskName").value || "-";
+const reviewer = document.getElementById("reviewer").value || "-";
+
+document.getElementById("reportTask").textContent = task;
+document.getElementById("reportReviewer").textContent = reviewer;
+
   saveHistory(finalScore, risk);
 }
 
@@ -143,7 +149,19 @@ function renderHistory() {
     ul.appendChild(li);
   });
 }
-renderHistory();
+
+function saveHistory(score, risk) {
+  historyData.unshift({
+    date: new Date().toLocaleString(),
+    task: document.getElementById("taskName").value || "-",
+    reviewer: document.getElementById("reviewer").value || "-",
+    score,
+    risk
+  });
+  localStorage.setItem("rebaHistory", JSON.stringify(historyData));
+  renderHistory();
+}
+
 
 function exportCSV() {
   let csv = "Tanggal,Skor,Risiko\n";
