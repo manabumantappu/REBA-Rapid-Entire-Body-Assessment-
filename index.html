@@ -26,7 +26,7 @@
     <h2>Grup A</h2>
     <div class="step">
   <h3>Step 1: Locate Neck Position</h3>
-  <img src="images/step1-neck.jpg" alt="Step 1 Neck">
+  <img src="images/step1-neck.JPG" alt="Step 1 Neck">
   <p class="step-note">
     Tentukan posisi leher (0–20°, &gt;20°, ekstensi).
     <br>Adjust (Step 1a): jika leher twisted / side bending → +1
@@ -34,7 +34,7 @@
 </div>
     <div class="step">
   <h3>Step 2: Locate Trunk Position</h3>
-  <img src="images/step2-trunk.jpg" alt="Step 2 Trunk">
+  <img src="images/step2-trunk.JPG" alt="Step 2 Trunk">
   <p class="step-note">
     Tentukan posisi punggung (tegak, fleksi, ekstensi).
     <br>Adjust (Step 2a): trunk twisted / side bending → +1
@@ -42,7 +42,7 @@
 </div>
 <div class="step">
   <h3>Step 3: Legs</h3>
-  <img src="images/step3-legs.jpg" alt="Step 3 Legs">
+  <img src="images/step3-legs.JPG" alt="Step 3 Legs">
   <p class="step-note">
     Tentukan posisi kaki (dua kaki, satu kaki, fleksi).
   </p>
@@ -89,6 +89,24 @@
       </select>
     </label>
 
+    <label>Sudut Punggung (°)
+  <input type="number" id="trunkAngle" placeholder="contoh: 40">
+</label>
+
+    <!-- ADJUST NECK -->
+<div class="adjust">
+  <strong>Adjust Leher</strong><br>
+  <label><input type="checkbox" id="neckTwist"> Leher twisted</label>
+  <label><input type="checkbox" id="neckSide"> Leher side bending</label>
+</div>
+
+<!-- ADJUST TRUNK -->
+<div class="adjust">
+  <strong>Adjust Trunk</strong><br>
+  <label><input type="checkbox" id="trunkTwist"> Trunk twisted</label>
+  <label><input type="checkbox" id="trunkSide"> Trunk side bending</label>
+</div>
+
     <label>Kaki
       <select id="legs">
         <option value="1">Stabil</option>
@@ -101,7 +119,7 @@
     <h2>Grup B</h2>
     <div class="step">
   <h3>Step 7: Locate Upper Arm Position</h3>
-  <img src="images/step7-upper-arm.jpg" alt="Step 7 Upper Arm">
+  <img src="images/step7-upper-arm.JPG" alt="Step 7 Upper Arm">
   <p class="step-note">
     Tentukan sudut lengan atas.
     <br>Adjust (Step 7a): bahu terangkat / abduksi → +1
@@ -110,14 +128,14 @@
 </div>
 <div class="step">
   <h3>Step 8: Locate Lower Arm Position</h3>
-  <img src="images/step8-lower-arm.jpg" alt="Step 8 Lower Arm">
+  <img src="images/step8-lower-arm.JPG" alt="Step 8 Lower Arm">
   <p class="step-note">
     Tentukan sudut lengan bawah (60–100°, &lt;60°, &gt;100°).
   </p>
 </div>
 <div class="step">
   <h3>Step 9: Locate Wrist Position</h3>
-  <img src="images/step9-wrist.jpg" alt="Step 9 Wrist">
+  <img src="images/step9-wrist.JPG" alt="Step 9 Wrist">
   <p class="step-note">
     Tentukan posisi pergelangan.
     <br>Adjust (Step 9a): wrist bent / twisted → +1
@@ -151,6 +169,10 @@
       </select>
     </label>
 
+    <label>Sudut Lengan Atas (°)
+  <input type="number" id="upperArmAngle" placeholder="contoh: 70">
+</label>
+    
     <label>Lengan Bawah
       <select id="lowerArm">
         <option value="1">Sudut normal</option>
@@ -158,12 +180,35 @@
       </select>
     </label>
 
+    <label>Sudut Lengan Bawah (°)
+  <input type="number" id="lowerArmAngle" placeholder="contoh: 90">
+</label>
+
     <label>Pergelangan Tangan
       <select id="wrist">
         <option value="1">Netral</option>
         <option value="2">Menekuk / memutar</option>
       </select>
     </label>
+
+    <label>Sudut Pergelangan (°)
+  <input type="number" id="wristAngle" placeholder="contoh: 20">
+</label>
+
+    <!-- ADJUST UPPER ARM -->
+<div class="adjust">
+  <strong>Adjust Upper Arm</strong><br>
+  <label><input type="checkbox" id="shoulderRaised"> Shoulder raised</label>
+  <label><input type="checkbox" id="upperAbducted"> Upper arm abducted</label>
+  <label><input type="checkbox" id="armSupported"> Arm supported / leaning</label>
+</div>
+
+<!-- ADJUST WRIST -->
+<div class="adjust">
+  <strong>Adjust Wrist</strong><br>
+  <label><input type="checkbox" id="wristTwist"> Wrist bent / twisted</label>
+</div>
+
   </section>
 
   <section>
