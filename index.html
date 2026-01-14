@@ -17,14 +17,6 @@
 <main class="container">
 <section>
   <h2>Upload Foto Postur</h2>
-  <label>Nama Task / Pekerjaan
-  <input type="text" id="taskName" placeholder="contoh: Angkat Box Gudang">
-</label>
-
-<label>Reviewer / Penilai
-  <input type="text" id="reviewer" placeholder="contoh: Santoso / Kaizen">
-</label>
-
   <input type="file" accept="image/*" id="photoInput">
   <canvas id="canvas"></canvas>
   <p class="hint">Klik pada foto untuk menandai titik tubuh</p>
@@ -32,52 +24,6 @@
 
   <section>
     <h2>Grup A</h2>
-    <div class="step">
-  <h3>Step 1: Locate Neck Position</h3>
-  <img src="images/step1-neck.JPG" alt="Step 1 Neck">
-  <p class="step-note">
-    Tentukan posisi leher (0–20°, &gt;20°, ekstensi).
-    <br>Adjust (Step 1a): jika leher twisted / side bending → +1
-  </p>
-</div>
-    <div class="step">
-  <h3>Step 2: Locate Trunk Position</h3>
-  <img src="images/step2-trunk.JPG" alt="Step 2 Trunk">
-  <p class="step-note">
-    Tentukan posisi punggung (tegak, fleksi, ekstensi).
-    <br>Adjust (Step 2a): trunk twisted / side bending → +1
-  </p>
-</div>
-<div class="step">
-  <h3>Step 3: Legs</h3>
-  <img src="images/step3-legs.JPG" alt="Step 3 Legs">
-  <p class="step-note">
-    Tentukan posisi kaki (dua kaki, satu kaki, fleksi).
-  </p>
-</div>
-<div class="step">
-  <h3>Step 4: Look-up Posture Score (Table A)</h3>
-  <p class="step-note">
-    Gunakan nilai dari Step 1–3 untuk mencari skor di Table A.
-  </p>
-</div>
-<div class="step">
-  <h3>Step 5: Add Force / Load Score</h3>
-  <p class="step-note">
-    Tambahkan skor beban (&lt;5 kg, 5–10 kg, &gt;10 kg).
-    <br>Jika ada shock / force cepat → +1
-  </p>
-</div>
-<div class="step">
-  <h3>Step 6: Score A</h3>
-  <p class="step-note">
-    Jumlahkan skor Step 4 + Step 5 → Score A.
-    <br>Gunakan Score A untuk baris Table C.
-  </p>
-</div>
-
-<!-- LEHER/NECK -->
-    <div id="neckBlock">
     <label>Leher
       <select id="neck">
         <option value="1">Netral</option>
@@ -85,14 +31,11 @@
         <option value="3">Memutar / miring</option>
       </select>
     </label>
-<small>Skor Leher: <strong id="neckScoreText">-</strong></small>
+    
      <label>Sudut Leher (°)
     <input type="number" id="neckAngle" placeholder="contoh: 25">
   </label>
-<div class="adjust">...</div>
-</div>
 
-     <div id="trunkBlock">
     <label>Punggung
       <select id="trunk">
         <option value="1">Tegak</option>
@@ -100,86 +43,17 @@
         <option value="3">Membungkuk berat / memutar</option>
       </select>
     </label>
-<small>Skor Punggung: <strong id="trunkScoreText">-</strong></small>
-    <label>Sudut Punggung (°)
-  <input type="number" id="trunkAngle" placeholder="contoh: 40">
-</label>
-<div class="adjust">...</div>
-</div>
-    
-    <!-- ADJUST NECK -->
-<div class="adjust">
-  <strong>Adjust Leher</strong><br>
-  <label><input type="checkbox" id="neckTwist"> Leher twisted</label>
-  <label><input type="checkbox" id="neckSide"> Leher side bending</label>
-</div>
 
-<!-- ADJUST TRUNK -->
-<div class="adjust">
-  <strong>Adjust Trunk</strong><br>
-  <label><input type="checkbox" id="trunkTwist"> Trunk twisted</label>
-  <label><input type="checkbox" id="trunkSide"> Trunk side bending</label>
-</div>
-
-    <div id="legsBlock">
     <label>Kaki
       <select id="legs">
         <option value="1">Stabil</option>
         <option value="2">Tidak stabil / bertumpu satu kaki</option>
       </select>
     </label>
-       <small>Skor Kaki: <strong id="legsScoreText">-</strong></small>
-    </div>
   </section>
 
   <section>
     <h2>Grup B</h2>
-    <div class="step">
-  <h3>Step 7: Locate Upper Arm Position</h3>
-  <img src="images/step7-upper-arm.JPG" alt="Step 7 Upper Arm">
-  <p class="step-note">
-    Tentukan sudut lengan atas.
-    <br>Adjust (Step 7a): bahu terangkat / abduksi → +1
-    <br>Jika lengan disangga → -1
-  </p>
-</div>
-    
-<div class="step">
-  <h3>Step 8: Locate Lower Arm Position</h3>
-  <img src="images/step8-lower-arm.JPG" alt="Step 8 Lower Arm">
-  <p class="step-note">
-    Tentukan sudut lengan bawah (60–100°, &lt;60°, &gt;100°).
-  </p>
-</div>
-<div class="step">
-  <h3>Step 9: Locate Wrist Position</h3>
-  <img src="images/step9-wrist.JPG" alt="Step 9 Wrist">
-  <p class="step-note">
-    Tentukan posisi pergelangan.
-    <br>Adjust (Step 9a): wrist bent / twisted → +1
-  </p>
-</div>
-<div class="step">
-  <h3>Step 10: Look-up Posture Score (Table B)</h3>
-  <p class="step-note">
-    Gunakan nilai Step 7–9 untuk mencari skor di Table B.
-  </p>
-</div>
-<div class="step">
-  <h3>Step 11: Add Coupling Score</h3>
-  <p class="step-note">
-    Tambahkan skor kualitas pegangan (baik, cukup, buruk).
-  </p>
-</div>
-<div class="step">
-  <h3>Step 12: Score B</h3>
-  <p class="step-note">
-    Jumlahkan skor Step 10 + Step 11 → Score B.
-    <br>Gunakan Score B untuk kolom Table C.
-  </p>
-</div>
-
-    <div id="upperarmBlock">
     <label>Lengan Atas
       <select id="upperArm">
         <option value="1">Netral</option>
@@ -188,68 +62,23 @@
       </select>
     </label>
 
-    <label>Sudut Lengan Atas (°)
-  <input type="number" id="upperArmAngle" placeholder="contoh: 70">
-</label>
-   <small>Skor Lengan Atas: <strong id="upperArmScoreText">-</strong></small>
- </div>
-
-    <div id="lowerarmBlock">
-        <label>Lengan Bawah
+    <label>Lengan Bawah
       <select id="lowerArm">
         <option value="1">Sudut normal</option>
         <option value="2">Sudut ekstrem</option>
       </select>
     </label>
 
-    <label>Sudut Lengan Bawah (°)
-  <input type="number" id="lowerArmAngle" placeholder="contoh: 90">
-</label>
-<small>Skor Lengan Bawah: <strong id="lowerArmScoreText">-</strong></small>
-</div>
-
-    <div id="wristBlock">
     <label>Pergelangan Tangan
       <select id="wrist">
         <option value="1">Netral</option>
         <option value="2">Menekuk / memutar</option>
       </select>
     </label>
-
-    <label>Sudut Pergelangan (°)
-  <input type="number" id="wristAngle" placeholder="contoh: 20">
-</label>
- <small>Skor Pergelangan: <strong id="wristScoreText">-</strong></small>
-</div>
-    
-    <!-- ADJUST UPPER ARM -->
-<div class="adjust">
-  <strong>Adjust Upper Arm</strong><br>
-  <label><input type="checkbox" id="shoulderRaised"> Shoulder raised</label>
-  <label><input type="checkbox" id="upperAbducted"> Upper arm abducted</label>
-  <label><input type="checkbox" id="armSupported"> Arm supported / leaning</label>
-</div>
-
-<!-- ADJUST WRIST -->
-<div class="adjust">
-  <strong>Adjust Wrist</strong><br>
-  <label><input type="checkbox" id="wristTwist"> Wrist bent / twisted</label>
-</div>
-
   </section>
 
   <section>
     <h2>Faktor Tambahan</h2>
-    <div class="step">
-  <h3>Step 13: Activity Score</h3>
-  <p class="step-note">
-    Tambahkan +1 jika:
-    <br>• Postur statis &gt; 1 menit
-    <br>• Gerakan berulang (&gt;4x/menit)
-    <br>• Perubahan postur cepat / tidak stabil
-  </p>
-</div>
-    
     <label>Beban
       <select id="load">
         <option value="0">&lt; 5 kg</option>
@@ -279,23 +108,11 @@
   <button class="secondary" onclick="resetForm()">Reset</button>
 
   <section id="result" class="result hidden">
-  <h2>Hasil Analisa</h2>
-
-  <p>Task: <strong id="resultTask"></strong></p>
-  <p>Reviewer: <strong id="resultReviewer"></strong></p>
-  <p>Score A (Postur A): <strong id="scoreA"></strong></p>
-  <p>Score B (Postur B): <strong id="scoreB"></strong></p>
-
-  <hr>
-
-  <p>Skor REBA: <strong id="score"></strong></p>
-  <p>Tingkat Risiko: <strong id="risk"></strong></p>
-  <p id="autoSummary" style="margin-top:10px;font-weight:bold;"></p> 
-  <p id="recommendation"></p>
-  
-
-</section>
-
+    <h2>Hasil Analisa</h2>
+    <p>Skor REBA: <strong id="score"></strong></p>
+    <p>Tingkat Risiko: <strong id="risk"></strong></p>
+    <p id="recommendation"></p>
+  </section>
 
   <section>
   <h2>Ringkasan Laporan</h2>
@@ -312,7 +129,7 @@
 </main>
 
 <footer>
-  <p>© 2026 ANALISA REBA | Manabu Mantappu</p>
+  <p>© 2026 ANALISA REBA | GitHub Pages Ready</p>
 </footer>
 
 <script src="script.js"></script>
