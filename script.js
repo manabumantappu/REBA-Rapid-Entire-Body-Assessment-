@@ -1,28 +1,22 @@
 /* =========================================================
-   REBA OFFICIAL TABLES (ISO / Hignett & McAtamney)
+   REBA OFFICIAL TABLES (ISO - SIMPLIFIED LEG SCORE)
 ========================================================= */
 
-// TABLE A: Neck (1–3) × Trunk (1–5) × Legs (1–4)
+// TABLE A: Neck (1–3) × Trunk (1–5) × Legs (1–2 simplified)
 const tableA = [
-  [
-    [1,2,3,4],[2,3,4,5],[3,4,5,6],[4,5,6,7],[5,6,7,8]
-  ],
-  [
-    [2,3,4,5],[3,4,5,6],[4,5,6,7],[5,6,7,8],[6,7,8,9]
-  ],
-  [
-    [3,4,5,6],[4,5,6,7],[5,6,7,8],[6,7,8,9],[7,8,9,10]
-  ]
+  [[1,2,3,4],[2,3,4,5],[3,4,5,6],[4,5,6,7],[5,6,7,8]],
+  [[2,3,4,5],[3,4,5,6],[4,5,6,7],[5,6,7,8],[6,7,8,9]],
+  [[3,4,5,6],[4,5,6,7],[5,6,7,8],[6,7,8,9],[7,8,9,10]]
 ];
 
-// TABLE B: Upper Arm (1–3) × Lower Arm (1–2) × Wrist (1–3)
+// TABLE B
 const tableB = [
   [[1,2,3],[2,3,4]],
   [[2,3,4],[3,4,5]],
   [[3,4,5],[4,5,6]]
 ];
 
-// TABLE C: Score A (1–8) × Score B (1–7)
+// TABLE C
 const tableC = [
   [1,2,3,4,5,6,7],
   [2,3,4,5,6,7,8],
@@ -35,198 +29,136 @@ const tableC = [
 ];
 
 // =========================================================
-
-function clamp(v, min, max) {
-  return Math.max(min, Math.min(max, v));
-}
-
+const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
 let historyData = JSON.parse(localStorage.getItem("rebaHistory")) || [];
 
 /* =========================
    THEME
 ========================= */
-document.getElementById("themeToggle").onclick = () => {
+const themeBtn = document.getElementById("themeToggle");
+themeBtn.onclick = () => {
   document.body.classList.toggle("dark");
   localStorage.setItem("theme", document.body.classList.contains("dark"));
 };
-if (localStorage.getItem("theme") === "true") {
-  document.body.classList.add("dark");
-}
+if (localStorage.getItem("theme")==="true") document.body.classList.add("dark");
 
 /* =========================
-   CORE CALCULATION (ISO)
+   CALCULATE REBA
 ========================= */
 function calculateREBA() {
   const v = id => Number(document.getElementById(id)?.value);
 
-  let neck = v("neck");
-  let trunk = v("trunk");
-  let legs = v("legs");
-  let upper = v("upperArm");
-  let lower = v("lowerArm");
-  let wrist = v("wrist");
+  let neck=v("neck"), trunk=v("trunk"), legs=v("legs"),
+      upper=v("upperArm"), lower=v("lowerArm"), wrist=v("wrist");
 
-  // VALIDASI ISO
-  if (![neck,trunk,legs,upper,lower,wrist].every(n => n >= 1)) {
+  if (![neck,trunk,legs,upper,lower,wrist].every(n=>n>=1)) {
     alert("⚠️ Lengkapi semua penilaian postur terlebih dahulu.");
     return;
   }
 
-  // Adjust ISO REBA
   neck = adjustNeck(neck);
   trunk = adjustTrunk(trunk);
   upper = adjustUpperArm(upper);
   wrist = adjustWrist(wrist);
 
-  const load = v("load") || 0;
-  const coupling = v("coupling") || 0;
-  const activity = v("activity") || 0;
+  neck=clamp(neck,1,3);
+  trunk=clamp(trunk,1,5);
+  legs=clamp(legs,1,2);
+  upper=clamp(upper,1,3);
+  lower=clamp(lower,1,2);
+  wrist=clamp(wrist,1,3);
 
-  // Clamp resmi
-  neck = clamp(neck,1,3);
-  trunk = clamp(trunk,1,5);
-  legs = clamp(legs,1,2);       // HTML 2 opsi → ISO disederhanakan
-  upper = clamp(upper,1,3);
-  lower = clamp(lower,1,2);
-  wrist = clamp(wrist,1,3);
+  const load=v("load")||0, coupling=v("coupling")||0, activity=v("activity")||0;
 
   const scoreA = tableA[neck-1][trunk-1][legs-1] + load;
   const scoreB = tableB[upper-1][lower-1][wrist-1] + coupling;
+  const finalScore = tableC[clamp(scoreA,1,8)-1][clamp(scoreB,1,7)-1] + activity;
 
-  const finalScore =
-    tableC[clamp(scoreA,1,8)-1][clamp(scoreB,1,7)-1] + activity;
+  const level =
+    finalScore<=1?["Sangat Rendah","Tidak diperlukan tindakan."]:
+    finalScore<=3?["Rendah","Mungkin perlu perbaikan."]:
+    finalScore<=7?["Sedang","Perlu investigasi dan perubahan."]:
+    finalScore<=10?["Tinggi","Perlu tindakan segera."]:
+    ["Sangat Tinggi","Tindakan harus dilakukan SEKARANG."];
 
-  let risk, rec;
-  if (finalScore <= 1) {
-    risk = "Sangat Rendah";
-    rec = "Tidak diperlukan tindakan.";
-  } else if (finalScore <= 3) {
-    risk = "Rendah";
-    rec = "Mungkin perlu perbaikan.";
-  } else if (finalScore <= 7) {
-    risk = "Sedang";
-    rec = "Perlu investigasi dan perubahan.";
-  } else if (finalScore <= 10) {
-    risk = "Tinggi";
-    rec = "Perlu tindakan segera.";
-  } else {
-    risk = "Sangat Tinggi";
-    rec = "Tindakan harus dilakukan SEKARANG.";
-  }
+  score.textContent = finalScore;
+  risk.textContent = level[0];
+  recommendation.textContent = level[1];
+  result.classList.remove("hidden");
 
-  document.getElementById("score").textContent = finalScore;
-  document.getElementById("risk").textContent = risk;
-  document.getElementById("recommendation").textContent = rec;
-  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("reportTask").textContent =
+    document.getElementById("taskName").value || "-";
+  document.getElementById("reportReviewer").textContent =
+    document.getElementById("reviewer").value || "-";
 
-const task = document.getElementById("taskName").value || "-";
-const reviewer = document.getElementById("reviewer").value || "-";
-
-document.getElementById("reportTask").textContent = task;
-document.getElementById("reportReviewer").textContent = reviewer;
-
-  saveHistory(finalScore, risk);
+  saveHistory(finalScore, level[0]);
 }
 
 /* =========================
-   HISTORY & EXPORT
+   HISTORY
 ========================= */
 function saveHistory(score, risk) {
   historyData.unshift({
-    date: new Date().toLocaleString(),
-    score, risk
+    date:new Date().toLocaleString(),
+    task:taskName.value||"-",
+    reviewer:reviewer.value||"-",
+    score,risk
   });
-  localStorage.setItem("rebaHistory", JSON.stringify(historyData));
+  localStorage.setItem("rebaHistory",JSON.stringify(historyData));
   renderHistory();
 }
 
 function renderHistory() {
-  const ul = document.getElementById("history");
-  ul.innerHTML = "";
-  historyData.forEach(h => {
-    const li = document.createElement("li");
-    li.textContent = `${h.date} | Skor ${h.score} | ${h.risk}`;
-    ul.appendChild(li);
-  });
-}
-
-function saveHistory(score, risk) {
-  historyData.unshift({
-    date: new Date().toLocaleString(),
-    task: document.getElementById("taskName").value || "-",
-    reviewer: document.getElementById("reviewer").value || "-",
-    score,
-    risk
-  });
-  localStorage.setItem("rebaHistory", JSON.stringify(historyData));
-  renderHistory();
-}
-
-
-function exportCSV() {
-  let csv = "Tanggal,Skor,Risiko\n";
+  history.innerHTML="";
   historyData.forEach(h=>{
-    csv += `${h.date},${h.score},${h.risk}\n`;
+    const li=document.createElement("li");
+    li.textContent=`${h.date} | ${h.task} | ${h.reviewer} | Skor ${h.score} | ${h.risk}`;
+    history.appendChild(li);
   });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([csv]));
-  a.download = "reba_iso_valid.csv";
+}
+renderHistory();
+
+/* =========================
+   EXPORT CSV
+========================= */
+function exportCSV() {
+  let csv="Tanggal,Tugas,Reviewer,Skor,Risiko\n";
+  historyData.forEach(h=>{
+    csv+=`${h.date},${h.task},${h.reviewer},${h.score},${h.risk}\n`;
+  });
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([csv]));
+  a.download="reba_iso_report.csv";
   a.click();
 }
 
 /* =========================
-   RESET (UX FIX)
+   RESET
 ========================= */
 function resetForm() {
-  document.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
-  document.querySelectorAll("input[type=number]").forEach(i => i.value = "");
-  document.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = false);
-  document.getElementById("result").classList.add("hidden");
+  document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
+  document.querySelectorAll("input").forEach(i=>{
+    if(i.type==="checkbox") i.checked=false;
+    if(i.type==="number"||i.type==="text") i.value="";
+  });
+  result.classList.add("hidden");
 }
+
+/* =========================
+   ADJUST
+========================= */
+const isChecked=id=>document.getElementById(id)?.checked;
+const adjustNeck=s=>(isChecked("neckTwist")?s+1:s)+(isChecked("neckSide")?1:0);
+const adjustTrunk=s=>(isChecked("trunkTwist")?s+1:s)+(isChecked("trunkSide")?1:0);
+const adjustUpperArm=s=>{
+  if(isChecked("shoulderRaised")) s++;
+  if(isChecked("upperAbducted")) s++;
+  if(isChecked("armSupported")) s--;
+  return s<1?1:s;
+};
+const adjustWrist=s=>isChecked("wristTwist")?s+1:s;
 
 /* =========================
    DATE
 ========================= */
-document.getElementById("reportDate").textContent =
-  new Date().toLocaleDateString();
-
-/* =========================
-   ADJUST FUNCTIONS (ISO)
-========================= */
-function isChecked(id) {
-  return document.getElementById(id)?.checked;
-}
-
-function adjustNeck(s) {
-  if (isChecked("neckTwist")) s++;
-  if (isChecked("neckSide")) s++;
-  return s;
-}
-
-function adjustTrunk(s) {
-  if (isChecked("trunkTwist")) s++;
-  if (isChecked("trunkSide")) s++;
-  return s;
-}
-
-function adjustUpperArm(s) {
-  if (isChecked("shoulderRaised")) s++;
-  if (isChecked("upperAbducted")) s++;
-  if (isChecked("armSupported")) s--;
-  return s < 1 ? 1 : s;
-}
-
-function adjustWrist(s) {
-  if (isChecked("wristTwist")) s++;
-  return s;
-}
-img.onload = () => {
-  const maxWidth = canvas.parentElement.clientWidth;
-  const scale = Math.min(1, maxWidth / img.width);
-
-  canvas.width = img.width * scale;
-  canvas.height = img.height * scale;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-};
+reportDate.textContent=new Date().toLocaleDateString();
