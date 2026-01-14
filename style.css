@@ -130,4 +130,13 @@ canvas {
   border: 1px dashed #ccc;
   margin-top: 10px;
 }
+.risk-box{
+  padding:6px 12px;
+  border-radius:6px;
+  font-weight:bold;
+}
+.risk-low{background:#c8e6c9;color:#256029;}
+.risk-medium{background:#fff3cd;color:#856404;}
+.risk-high{background:#ffe0b2;color:#8a4b08;}
+.risk-very-high{background:#ffcdd2;color:#b71c1c;}
 
