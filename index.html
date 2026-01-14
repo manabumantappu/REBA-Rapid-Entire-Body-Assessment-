@@ -12,23 +12,30 @@
   <h1 data-i18n="title">ANALISA REBA</h1>
   <p data-i18n="subtitle">Rapid Entire Body Assessment</p>
 
-  <select id="langSelect">
-    <option value="id">🇮🇩 Indonesia</option>
-    <option value="en">🇬🇧 English</option>
-    <option value="jp">🇯🇵 日本語</option>
-  </select>
-
-  <button id="themeToggle">🌙 Dark Mode</button>
+  <div class="top-controls">
+    <select id="langSelect">
+      <option value="id">🇮🇩 Indonesia</option>
+      <option value="en">🇬🇧 English</option>
+      <option value="jp">🇯🇵 日本語</option>
+    </select>
+    <button id="themeToggle">🌙 Dark</button>
+  </div>
 </header>
 
 <main class="container">
 
+<!-- ================= TASK INFO ================= -->
 <section>
   <h2 data-i18n="taskInfo">Informasi Tugas</h2>
-  <label>Nama Tugas <input id="taskName" type="text"></label>
-  <label>Reviewer <input id="reviewer" type="text"></label>
+  <label data-i18n="taskName">Nama Tugas
+    <input type="text" id="taskNameInput">
+  </label>
+  <label data-i18n="reviewer">Reviewer
+    <input type="text" id="reviewerInput">
+  </label>
 </section>
 
+<!-- ================= PHOTO ================= -->
 <section>
   <h2 data-i18n="upload">Upload Foto Postur</h2>
   <input type="file" id="photoInput" accept="image/*">
@@ -43,39 +50,21 @@
   <div class="step">
     <img src="images/step-1-neck.JPG">
     <label>Neck
-      <select id="neck">
-        <option value="">--</option>
-        <option value="1">Neutral</option>
-        <option value="2">Flex / Extend</option>
-        <option value="3">Twist / Side bend</option>
-      </select>
+      <select id="neck"></select>
     </label>
   </div>
 
   <div class="step">
     <img src="images/step-2-trunk.JPG">
     <label>Trunk
-      <select id="trunk">
-        <option value="">--</option>
-        <option value="1">Upright</option>
-        <option value="2">Mild flex</option>
-        <option value="3">Moderate flex</option>
-        <option value="4">Severe flex</option>
-        <option value="5">Extend</option>
-      </select>
+      <select id="trunk"></select>
     </label>
   </div>
 
   <div class="step">
     <img src="images/step-3-legs.JPG">
     <label>Legs
-      <select id="legs">
-        <option value="">--</option>
-        <option value="1">Both feet</option>
-        <option value="2">One leg</option>
-        <option value="3">Moving</option>
-        <option value="4">Squatting</option>
-      </select>
+      <select id="legs"></select>
     </label>
   </div>
 </section>
@@ -87,53 +76,65 @@
   <div class="step">
     <img src="images/step-7-upper-arm.JPG">
     <label>Upper Arm
-      <select id="upperArm">
-        <option value="">--</option>
-        <option value="1">Neutral</option>
-        <option value="2">Raised</option>
-        <option value="3">Above shoulder</option>
-      </select>
+      <select id="upperArm"></select>
     </label>
   </div>
 
   <div class="step">
     <img src="images/step-8-lower-arm.JPG">
     <label>Lower Arm
-      <select id="lowerArm">
-        <option value="">--</option>
-        <option value="1">60–100°</option>
-        <option value="2">&lt;60° or &gt;100°</option>
-      </select>
+      <select id="lowerArm"></select>
     </label>
   </div>
 
   <div class="step">
     <img src="images/step-9-wrist.JPG">
     <label>Wrist
-      <select id="wrist">
-        <option value="">--</option>
-        <option value="1">Neutral</option>
-        <option value="2">Bent / twist</option>
-      </select>
+      <select id="wrist"></select>
     </label>
   </div>
 </section>
 
+<!-- ================= ADDITIONAL ================= -->
 <section>
-  <h2 data-i18n="additional">Additional</h2>
-  <label>Load <select id="load"><option value="0">&lt;5kg</option><option value="1">5–10kg</option><option value="2">&gt;10kg</option></select></label>
-  <label>Coupling <select id="coupling"><option value="0">Good</option><option value="1">Fair</option><option value="2">Poor</option></select></label>
-  <label>Activity <select id="activity"><option value="0">Normal</option><option value="1">Static / Repetitive</option></select></label>
+  <h2 data-i18n="additional">Faktor Tambahan</h2>
+
+  <label>Load
+    <select id="load">
+      <option value="0">&lt;5 kg</option>
+      <option value="1">5–10 kg</option>
+      <option value="2">&gt;10 kg</option>
+    </select>
+  </label>
+
+  <label>Coupling
+    <select id="coupling">
+      <option value="0">Good</option>
+      <option value="1">Fair</option>
+      <option value="2">Poor</option>
+    </select>
+  </label>
+
+  <label>Activity
+    <select id="activity">
+      <option value="0">Normal</option>
+      <option value="1">Static / Repetitive</option>
+    </select>
+  </label>
 </section>
 
-<button onclick="calculateREBA()">Hitung REBA</button>
+<button onclick="calculateREBA()" data-i18n="calculate">Hitung REBA</button>
 
+<!-- ================= RESULT ================= -->
 <section id="result" class="hidden">
-  <h2>Result</h2>
-  <p>Score: <span id="score"></span></p>
-  <p>Risk: <span id="risk" class="risk-box"></span></p>
+  <h2 data-i18n="result">Hasil Analisa</h2>
 
-  <h3>Breakdown</h3>
+  <p><strong data-i18n="score">Skor:</strong> <span id="finalScore"></span></p>
+  <p><strong data-i18n="risk">Risiko:</strong>
+    <span id="riskLabel" class="risk-box"></span>
+  </p>
+
+  <h3 data-i18n="breakdown">Breakdown</h3>
   <ul>
     <li>Table A: <span id="scoreA"></span></li>
     <li>Table B: <span id="scoreB"></span></li>
@@ -141,7 +142,20 @@
   </ul>
 </section>
 
+<!-- ================= SUMMARY ================= -->
+<section>
+  <h2 data-i18n="summary">Ringkasan Laporan</h2>
+  <p><strong data-i18n="taskName">Tugas:</strong> <span id="reportTask">-</span></p>
+  <p><strong data-i18n="reviewer">Reviewer:</strong> <span id="reportReviewer">-</span></p>
+  <p data-i18n="method">Metode: REBA</p>
+  <p><span id="reportDate"></span></p>
+</section>
+
 </main>
+
+<footer>
+  <p>© 2026 ANALISA REBA</p>
+</footer>
 
 <script src="script.js"></script>
 </body>
