@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ANALISA REBA</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
@@ -12,167 +12,136 @@
   <h1 data-i18n="title">ANALISA REBA</h1>
   <p data-i18n="subtitle">Rapid Entire Body Assessment</p>
 
-  <div style="margin-top:10px">
-    <select id="langSelect">
-      <option value="id">🇮🇩 Indonesia</option>
-      <option value="en">🇬🇧 English</option>
-      <option value="jp">🇯🇵 日本語</option>
-    </select>
-    <button id="themeToggle">🌙 Dark Mode</button>
-  </div>
+  <select id="langSelect">
+    <option value="id">🇮🇩 Indonesia</option>
+    <option value="en">🇬🇧 English</option>
+    <option value="jp">🇯🇵 日本語</option>
+  </select>
+
+  <button id="themeToggle">🌙 Dark Mode</button>
 </header>
 
 <main class="container">
 
 <section>
   <h2 data-i18n="taskInfo">Informasi Tugas</h2>
-
-  <label data-i18n="taskNameLabel">Nama Tugas
-    <input type="text" id="taskName">
-  </label>
-
-  <label data-i18n="reviewerLabel">Reviewer
-    <input type="text" id="reviewer">
-  </label>
+  <label>Nama Tugas <input id="taskName" type="text"></label>
+  <label>Reviewer <input id="reviewer" type="text"></label>
 </section>
 
 <section>
-  <h2 data-i18n="uploadPhoto">Upload Foto Postur</h2>
-  <input type="file" accept="image/*" id="photoInput">
+  <h2 data-i18n="upload">Upload Foto Postur</h2>
+  <input type="file" id="photoInput" accept="image/*">
   <canvas id="canvas"></canvas>
-  <p class="hint" data-i18n="photoHint">Klik pada foto untuk menandai titik tubuh</p>
+  <p class="hint" data-i18n="photoHint">Klik foto untuk menandai titik tubuh</p>
 </section>
 
+<!-- ================= GROUP A ================= -->
 <section>
   <h2>Group A</h2>
 
-  <label data-i18n="neck">Leher
-    <select id="neck">
-      <option value="">--</option>
-      <option value="1">Netral</option>
-      <option value="2">Fleksi / Ekstensi</option>
-      <option value="3">Twist / Side bend</option>
-    </select>
-  </label>
+  <div class="step">
+    <img src="images/step-1-neck.JPG">
+    <label>Neck
+      <select id="neck">
+        <option value="">--</option>
+        <option value="1">Neutral</option>
+        <option value="2">Flex / Extend</option>
+        <option value="3">Twist / Side bend</option>
+      </select>
+    </label>
+  </div>
 
-  <label data-i18n="trunk">Punggung
-    <select id="trunk">
-      <option value="">--</option>
-      <option value="1">Tegak</option>
-      <option value="2">Fleksi ringan</option>
-      <option value="3">Fleksi sedang</option>
-      <option value="4">Fleksi berat</option>
-      <option value="5">Ekstensi</option>
-    </select>
-  </label>
+  <div class="step">
+    <img src="images/step-2-trunk.JPG">
+    <label>Trunk
+      <select id="trunk">
+        <option value="">--</option>
+        <option value="1">Upright</option>
+        <option value="2">Mild flex</option>
+        <option value="3">Moderate flex</option>
+        <option value="4">Severe flex</option>
+        <option value="5">Extend</option>
+      </select>
+    </label>
+  </div>
 
-  <label data-i18n="legs">Kaki
-    <select id="legs">
-      <option value="">--</option>
-      <option value="1">Dua kaki stabil</option>
-      <option value="2">Satu kaki / berat tidak seimbang</option>
-      <option value="3">Berjalan / bergerak</option>
-      <option value="4">Berjongkok / lutut menekuk</option>
-    </select>
-  </label>
+  <div class="step">
+    <img src="images/step-3-legs.JPG">
+    <label>Legs
+      <select id="legs">
+        <option value="">--</option>
+        <option value="1">Both feet</option>
+        <option value="2">One leg</option>
+        <option value="3">Moving</option>
+        <option value="4">Squatting</option>
+      </select>
+    </label>
+  </div>
 </section>
 
+<!-- ================= GROUP B ================= -->
 <section>
   <h2>Group B</h2>
 
-  <label data-i18n="upperArm">Lengan Atas
-    <select id="upperArm">
-      <option value="">--</option>
-      <option value="1">Netral</option>
-      <option value="2">Terangkat</option>
-      <option value="3">Di atas bahu</option>
-    </select>
-  </label>
+  <div class="step">
+    <img src="images/step-7-upper-arm.JPG">
+    <label>Upper Arm
+      <select id="upperArm">
+        <option value="">--</option>
+        <option value="1">Neutral</option>
+        <option value="2">Raised</option>
+        <option value="3">Above shoulder</option>
+      </select>
+    </label>
+  </div>
 
-  <label data-i18n="lowerArm">Lengan Bawah
-    <select id="lowerArm">
-      <option value="">--</option>
-      <option value="1">60–100°</option>
-      <option value="2">&lt;60° atau &gt;100°</option>
-    </select>
-  </label>
+  <div class="step">
+    <img src="images/step-8-lower-arm.JPG">
+    <label>Lower Arm
+      <select id="lowerArm">
+        <option value="">--</option>
+        <option value="1">60–100°</option>
+        <option value="2">&lt;60° or &gt;100°</option>
+      </select>
+    </label>
+  </div>
 
-  <label data-i18n="wrist">Pergelangan
-    <select id="wrist">
-      <option value="">--</option>
-      <option value="1">Netral</option>
-      <option value="2">Menekuk / memutar</option>
-    </select>
-  </label>
+  <div class="step">
+    <img src="images/step-9-wrist.JPG">
+    <label>Wrist
+      <select id="wrist">
+        <option value="">--</option>
+        <option value="1">Neutral</option>
+        <option value="2">Bent / twist</option>
+      </select>
+    </label>
+  </div>
 </section>
 
 <section>
-  <h2 data-i18n="additional">Faktor Tambahan</h2>
-
-  <label data-i18n="load">Beban
-    <select id="load">
-      <option value="0">&lt; 5 kg</option>
-      <option value="1">5–10 kg</option>
-      <option value="2">&gt; 10 kg</option>
-    </select>
-  </label>
-
-  <label data-i18n="coupling">Coupling
-    <select id="coupling">
-      <option value="0">Baik</option>
-      <option value="1">Cukup</option>
-      <option value="2">Buruk</option>
-    </select>
-  </label>
-
-  <label data-i18n="activity">Aktivitas
-    <select id="activity">
-      <option value="0">Normal</option>
-      <option value="1">Statis / Berulang</option>
-    </select>
-  </label>
+  <h2 data-i18n="additional">Additional</h2>
+  <label>Load <select id="load"><option value="0">&lt;5kg</option><option value="1">5–10kg</option><option value="2">&gt;10kg</option></select></label>
+  <label>Coupling <select id="coupling"><option value="0">Good</option><option value="1">Fair</option><option value="2">Poor</option></select></label>
+  <label>Activity <select id="activity"><option value="0">Normal</option><option value="1">Static / Repetitive</option></select></label>
 </section>
 
-<button onclick="calculateREBA()" data-i18n="calculate">Hitung REBA</button>
-<button class="secondary" onclick="resetForm()" data-i18n="reset">Reset</button>
+<button onclick="calculateREBA()">Hitung REBA</button>
 
-<section id="result" class="result hidden">
-  <h2 data-i18n="result">Hasil Analisa</h2>
+<section id="result" class="hidden">
+  <h2>Result</h2>
+  <p>Score: <span id="score"></span></p>
+  <p>Risk: <span id="risk" class="risk-box"></span></p>
 
-  <p>
-    <strong data-i18n="score">Skor REBA:</strong>
-    <span id="score"></span>
-  </p>
-
-  <p>
-    <strong data-i18n="risk">Tingkat Risiko:</strong>
-    <span id="risk" class="risk-box"></span>
-  </p>
-
-  <p id="recommendation"></p>
-
-  <h3 data-i18n="breakdown">Breakdown Skor</h3>
+  <h3>Breakdown</h3>
   <ul>
     <li>Table A: <span id="scoreA"></span></li>
     <li>Table B: <span id="scoreB"></span></li>
-    <li>Table C (Final): <span id="scoreC"></span></li>
+    <li>Final: <span id="scoreC"></span></li>
   </ul>
 </section>
 
-<section>
-  <h2 data-i18n="summary">Ringkasan Laporan</h2>
-  <p><strong data-i18n="task">Tugas:</strong> <span id="reportTask">-</span></p>
-  <p><strong data-i18n="reviewer">Reviewer:</strong> <span id="reportReviewer">-</span></p>
-  <p data-i18n="method">Metode: REBA (Rapid Entire Body Assessment)</p>
-  <p data-i18n="date">Tanggal: <span id="reportDate"></span></p>
-  <button onclick="window.print()">Cetak / PDF</button>
-</section>
-
 </main>
-
-<footer>
-  <p>© 2026 ANALISA REBA</p>
-</footer>
 
 <script src="script.js"></script>
 </body>
