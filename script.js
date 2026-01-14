@@ -1,72 +1,305 @@
-const $=id=>document.getElementById(id);
-const v=id=>parseInt($(id).value)||0;
+/* =========================
+   REBA TABLE (OFFICIAL)
+========================= */
 
-/* ================= LANGUAGE ================= */
-const T={
- id:{title:"ANALISA REBA",subtitle:"Penilaian Postur Tubuh",
-     info:"Informasi Penilaian",task:"Task / Pekerjaan",reviewer:"Reviewer / Penilai"},
- en:{title:"REBA ANALYSIS",subtitle:"Rapid Entire Body Assessment",
-     info:"Assessment Info",task:"Task",reviewer:"Reviewer"},
- jp:{title:"REBA分析",subtitle:"全身作業姿勢評価",
-     info:"評価情報",task:"作業内容",reviewer:"評価者"}
+// TABLE A: Neck + Trunk + Legs
+const tableA = [
+/* Neck 1 */ [
+  [1,2,3,4], // Trunk 1 (legs 1-4)
+  [2,3,4,5], // Trunk 2
+  [3,4,5,6], // Trunk 3
+  [4,5,6,7], // Trunk 4
+  [5,6,7,8]  // Trunk 5
+],
+/* Neck 2 */ [
+  [2,3,4,5],
+  [3,4,5,6],
+  [4,5,6,7],
+  [5,6,7,8],
+  [6,7,8,9]
+],
+/* Neck 3 */ [
+  [3,4,5,6],
+  [4,5,6,7],
+  [5,6,7,8],
+  [6,7,8,9],
+  [7,8,9,10]
+]
+];
+
+// TABLE B: UpperArm + LowerArm + Wrist
+const tableB = [
+/* Upper 1 */ [
+  [1,2,3], // Lower 1
+  [2,3,4]  // Lower 2
+],
+/* Upper 2 */ [
+  [2,3,4],
+  [3,4,5]
+],
+/* Upper 3 */ [
+  [3,4,5],
+  [4,5,6]
+]
+];
+
+// FINAL TABLE C
+const tableC = [
+ [1,2,3,4,5,6,7],
+ [2,3,4,5,6,7,8],
+ [3,4,5,6,7,8,9],
+ [4,5,6,7,8,9,10],
+ [5,6,7,8,9,10,11],
+ [6,7,8,9,10,11,12],
+ [7,8,9,10,11,12,13],
+ [8,9,10,11,12,13,14]
+];
+
+// =========================
+
+let historyData = JSON.parse(localStorage.getItem("rebaHistory")) || [];
+
+// THEME
+document.getElementById("themeToggle").onclick = () => {
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme", document.body.classList.contains("dark"));
 };
-
-function setLang(l){
- document.querySelectorAll("[data-i18n]").forEach(e=>{
-  const k=e.dataset.i18n;
-  if(T[l][k]) e.innerText=T[l][k];
- });
+if (localStorage.getItem("theme") === "true") {
+  document.body.classList.add("dark");
 }
 
-/* ================= DARK MODE ================= */
-if(localStorage.theme==="dark") document.body.classList.add("dark");
-$("themeToggle").onclick=()=>{
- document.body.classList.toggle("dark");
- localStorage.theme=document.body.classList.contains("dark")?"dark":"light";
+// =========================
+// CALCULATE REBA (REAL)
+// =========================
+function calculateREBA() {
+  const v = id => +document.getElementById(id).value;
+
+let neckScore = v("neck");
+let trunkScore = v("trunk");
+let upperArmScore = v("upperArm");
+let wristScore = v("wrist");
+
+neckScore = adjustNeck(neckScore);
+trunkScore = adjustTrunk(trunkScore);
+upperArmScore = adjustUpperArm(upperArmScore);
+wristScore = adjustWrist(wristScore);
+
+
+  const load = v("load");
+  const coupling = v("coupling");
+  const activity = v("activity");
+
+ const scoreA = tableA[neckScore-1][trunkScore-1][legs] + load;
+ const scoreB = tableB[upperArmScore-1][lower][wristScore-1] + coupling;
+  
+   const finalScore = tableC[scoreA-1][scoreB-1] + activity;
+
+  let risk, rec;
+  if (finalScore <= 1) {
+    risk = "Sangat Rendah";
+    rec = "Tidak diperlukan tindakan.";
+  } else if (finalScore <= 3) {
+    risk = "Rendah";
+    rec = "Mungkin perlu perbaikan.";
+  } else if (finalScore <= 7) {
+    risk = "Sedang";
+    rec = "Perlu investigasi dan perubahan.";
+  } else if (finalScore <= 10) {
+    risk = "Tinggi";
+    rec = "Perlu tindakan segera.";
+  } else {
+    risk = "Sangat Tinggi";
+    rec = "Tindakan harus dilakukan SEKARANG.";
+  }
+
+  document.getElementById("score").textContent = finalScore;
+  document.getElementById("risk").textContent = risk;
+  document.getElementById("recommendation").textContent = rec;
+  document.getElementById("result").classList.remove("hidden");
+
+  saveHistory(finalScore, risk);
+}
+
+// =========================
+// HISTORY
+// =========================
+function saveHistory(score, risk) {
+  historyData.unshift({
+    date: new Date().toLocaleString(),
+    score, risk
+  });
+  localStorage.setItem("rebaHistory", JSON.stringify(historyData));
+  renderHistory();
+}
+
+function renderHistory() {
+  const ul = document.getElementById("history");
+  ul.innerHTML = "";
+  historyData.forEach(h => {
+    const li = document.createElement("li");
+    li.textContent = `${h.date} | Skor ${h.score} | ${h.risk}`;
+    ul.appendChild(li);
+  });
+}
+renderHistory();
+
+// =========================
+function exportCSV() {
+  let csv = "Tanggal,Skor,Risiko\n";
+  historyData.forEach(h=>{
+    csv += `${h.date},${h.score},${h.risk}\n`;
+  });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv]));
+  a.download = "reba_valid.csv";
+  a.click();
+}
+/* =========================
+   PHOTO + MARKING SYSTEM
+========================= */
+const photoInput = document.getElementById("photoInput");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let img = new Image();
+let points = [];
+
+photoInput.onchange = e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      points = [];
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
 };
 
-/* ================= AUTO SCORE ================= */
-document.querySelectorAll("select").forEach(e=>{
- e.addEventListener("change",calculateREBA);
+canvas.addEventListener("click", e => {
+  const rect = canvas.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+  const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+  points.push({ x, y });
+
+  ctx.fillStyle = "red";
+  ctx.beginPath();
+  ctx.arc(x, y, 5, 0, Math.PI * 2);
+  ctx.fill();
 });
 
-function calculateREBA(){
- const A=v("neck")+v("trunk")+v("legs");
- const B=v("upperArm")+v("lowerArm")+v("wrist");
- const R=A+B;
 
- $("sNeck").innerText=v("neck");
- $("sTrunk").innerText=v("trunk");
- $("sLegs").innerText=v("legs");
- $("sUpper").innerText=v("upperArm");
- $("sLower").innerText=v("lowerArm");
- $("sWrist").innerText=v("wrist");
+function resetForm() {
+  document.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
+  document.getElementById("result").classList.add("hidden");
+}
+document.getElementById("reportDate").textContent =
+  new Date().toLocaleDateString();
+/* ===============================
+   ANGLE → SCORE MAPPING (REBA)
+================================ */
 
- $("scoreA").innerText=A;
- $("scoreB").innerText=B;
- $("score").innerText=R;
+// NECK
+function mapNeck(angle) {
+  if (angle === null || angle === "") return null;
+  angle = Math.abs(angle);
 
- highlightSteps();
-
- const risk=$("risk");
- risk.className="risk-badge "+riskClass(R);
- risk.innerText=riskText(R);
+  if (angle <= 20) return 1;
+  if (angle <= 45) return 2;
+  return 3;
 }
 
-function highlightSteps(){
- document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
- document.querySelectorAll(".step").forEach(s=>s.classList.add("active"));
+// TRUNK
+function mapTrunk(angle) {
+  if (angle === null || angle === "") return null;
+  angle = Math.abs(angle);
+
+  if (angle <= 5) return 1;
+  if (angle <= 20) return 2;
+  if (angle <= 60) return 3;
+  return 4;
 }
 
-function riskText(s){
- if(s<=3)return"Action Level 1 – Low Risk";
- if(s<=7)return"Action Level 2 – Medium Risk";
- if(s<=10)return"Action Level 3 – High Risk";
- return"Action Level 4 – Very High Risk";
+// UPPER ARM
+function mapUpperArm(angle) {
+  if (angle === null || angle === "") return null;
+  angle = Math.abs(angle);
+
+  if (angle <= 20) return 1;
+  if (angle <= 45) return 2;
+  if (angle <= 90) return 3;
+  return 4;
 }
-function riskClass(s){
- if(s<=3)return"risk-low";
- if(s<=7)return"risk-mid";
- if(s<=10)return"risk-high";
- return"risk-extreme";
+
+// LOWER ARM
+function mapLowerArm(angle) {
+  if (angle === null || angle === "") return null;
+  angle = Math.abs(angle);
+
+  if (angle >= 60 && angle <= 100) return 1;
+  return 2;
+}
+
+// WRIST
+function mapWrist(angle) {
+  if (angle === null || angle === "") return null;
+  angle = Math.abs(angle);
+
+  if (angle <= 15) return 1;
+  return 2;
+}
+function syncAngleToSelect(angleId, selectId, mapper) {
+  const angleInput = document.getElementById(angleId);
+  const select = document.getElementById(selectId);
+
+  if (!angleInput || !select) return;
+
+  angleInput.addEventListener("input", () => {
+    const score = mapper(angleInput.value);
+    if (score !== null) {
+      select.value = score;
+    }
+  });
+}
+
+// HUBUNGKAN
+syncAngleToSelect("neckAngle", "neck", mapNeck);
+syncAngleToSelect("trunkAngle", "trunk", mapTrunk);
+syncAngleToSelect("upperArmAngle", "upperArm", mapUpperArm);
+syncAngleToSelect("lowerArmAngle", "lowerArm", mapLowerArm);
+syncAngleToSelect("wristAngle", "wrist", mapWrist);
+
+function isChecked(id) {
+  const el = document.getElementById(id);
+  return el && el.checked;
+}
+
+function adjustNeck(score) {
+  if (isChecked("neckTwist")) score += 1;
+  if (isChecked("neckSide")) score += 1;
+  return score;
+}
+
+function adjustTrunk(score) {
+  if (isChecked("trunkTwist")) score += 1;
+  if (isChecked("trunkSide")) score += 1;
+  return score;
+}
+
+function adjustUpperArm(score) {
+  if (isChecked("shoulderRaised")) score += 1;
+  if (isChecked("upperAbducted")) score += 1;
+  if (isChecked("armSupported")) score -= 1;
+  return score < 1 ? 1 : score;
+}
+
+function adjustWrist(score) {
+  if (isChecked("wristTwist")) score += 1;
+  return score;
 }
