@@ -24,6 +24,51 @@
 
   <section>
     <h2>Grup A</h2>
+    <div class="step">
+  <h3>Step 1: Locate Neck Position</h3>
+  <img src="images/step1-neck.jpg" alt="Step 1 Neck">
+  <p class="step-note">
+    Tentukan posisi leher (0–20°, &gt;20°, ekstensi).
+    <br>Adjust (Step 1a): jika leher twisted / side bending → +1
+  </p>
+</div>
+    <div class="step">
+  <h3>Step 2: Locate Trunk Position</h3>
+  <img src="images/step2-trunk.jpg" alt="Step 2 Trunk">
+  <p class="step-note">
+    Tentukan posisi punggung (tegak, fleksi, ekstensi).
+    <br>Adjust (Step 2a): trunk twisted / side bending → +1
+  </p>
+</div>
+<div class="step">
+  <h3>Step 3: Legs</h3>
+  <img src="images/step3-legs.jpg" alt="Step 3 Legs">
+  <p class="step-note">
+    Tentukan posisi kaki (dua kaki, satu kaki, fleksi).
+  </p>
+</div>
+<div class="step">
+  <h3>Step 4: Look-up Posture Score (Table A)</h3>
+  <p class="step-note">
+    Gunakan nilai dari Step 1–3 untuk mencari skor di Table A.
+  </p>
+</div>
+<div class="step">
+  <h3>Step 5: Add Force / Load Score</h3>
+  <p class="step-note">
+    Tambahkan skor beban (&lt;5 kg, 5–10 kg, &gt;10 kg).
+    <br>Jika ada shock / force cepat → +1
+  </p>
+</div>
+<div class="step">
+  <h3>Step 6: Score A</h3>
+  <p class="step-note">
+    Jumlahkan skor Step 4 + Step 5 → Score A.
+    <br>Gunakan Score A untuk baris Table C.
+  </p>
+</div>
+
+
     <label>Leher
       <select id="neck">
         <option value="1">Netral</option>
@@ -54,6 +99,50 @@
 
   <section>
     <h2>Grup B</h2>
+    <div class="step">
+  <h3>Step 7: Locate Upper Arm Position</h3>
+  <img src="images/step7-upper-arm.jpg" alt="Step 7 Upper Arm">
+  <p class="step-note">
+    Tentukan sudut lengan atas.
+    <br>Adjust (Step 7a): bahu terangkat / abduksi → +1
+    <br>Jika lengan disangga → -1
+  </p>
+</div>
+<div class="step">
+  <h3>Step 8: Locate Lower Arm Position</h3>
+  <img src="images/step8-lower-arm.jpg" alt="Step 8 Lower Arm">
+  <p class="step-note">
+    Tentukan sudut lengan bawah (60–100°, &lt;60°, &gt;100°).
+  </p>
+</div>
+<div class="step">
+  <h3>Step 9: Locate Wrist Position</h3>
+  <img src="images/step9-wrist.jpg" alt="Step 9 Wrist">
+  <p class="step-note">
+    Tentukan posisi pergelangan.
+    <br>Adjust (Step 9a): wrist bent / twisted → +1
+  </p>
+</div>
+<div class="step">
+  <h3>Step 10: Look-up Posture Score (Table B)</h3>
+  <p class="step-note">
+    Gunakan nilai Step 7–9 untuk mencari skor di Table B.
+  </p>
+</div>
+<div class="step">
+  <h3>Step 11: Add Coupling Score</h3>
+  <p class="step-note">
+    Tambahkan skor kualitas pegangan (baik, cukup, buruk).
+  </p>
+</div>
+<div class="step">
+  <h3>Step 12: Score B</h3>
+  <p class="step-note">
+    Jumlahkan skor Step 10 + Step 11 → Score B.
+    <br>Gunakan Score B untuk kolom Table C.
+  </p>
+</div>
+
     <label>Lengan Atas
       <select id="upperArm">
         <option value="1">Netral</option>
@@ -79,6 +168,16 @@
 
   <section>
     <h2>Faktor Tambahan</h2>
+    <div class="step">
+  <h3>Step 13: Activity Score</h3>
+  <p class="step-note">
+    Tambahkan +1 jika:
+    <br>• Postur statis &gt; 1 menit
+    <br>• Gerakan berulang (&gt;4x/menit)
+    <br>• Perubahan postur cepat / tidak stabil
+  </p>
+</div>
+    
     <label>Beban
       <select id="load">
         <option value="0">&lt; 5 kg</option>
