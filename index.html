@@ -17,15 +17,12 @@
 <main class="container">
 
   <section>
-  <h2>Informasi Tugas</h2>
-
-  <label>Nama Tugas / Aktivitas
-    <input type="text" id="taskName" placeholder="contoh: Pengangkatan Box Manual">
-  </label>
-
-  <label>Reviewer / Penilai
-    <input type="text" id="reviewer" placeholder="contoh: Tim HSE">
-  </label>
+  <h2>Ringkasan Laporan</h2>
+  <p><strong>Tugas:</strong> <span id="reportTask">-</span></p>
+  <p><strong>Reviewer:</strong> <span id="reportReviewer">-</span></p>
+  <p>Metode: REBA (Rapid Entire Body Assessment)</p>
+  <p>Tanggal: <span id="reportDate"></span></p>
+  <button onclick="window.print()">Cetak / PDF</button>
 </section>
 
 <section>
