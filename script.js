@@ -1,98 +1,39 @@
-/* =========================
-   REBA TABLE (OFFICIAL)
-========================= */
-
-// TABLE A: Neck + Trunk + Legs
-const tableA = [
-/* Neck 1 */ [
-  [1,2,3,4], // Trunk 1 (legs 1-4)
-  [2,3,4,5], // Trunk 2
-  [3,4,5,6], // Trunk 3
-  [4,5,6,7], // Trunk 4
-  [5,6,7,8]  // Trunk 5
-],
-/* Neck 2 */ [
-  [2,3,4,5],
-  [3,4,5,6],
-  [4,5,6,7],
-  [5,6,7,8],
-  [6,7,8,9]
-],
-/* Neck 3 */ [
-  [3,4,5,6],
-  [4,5,6,7],
-  [5,6,7,8],
-  [6,7,8,9],
-  [7,8,9,10]
-]
-];
-
-// TABLE B: UpperArm + LowerArm + Wrist
-const tableB = [
-/* Upper 1 */ [
-  [1,2,3], // Lower 1
-  [2,3,4]  // Lower 2
-],
-/* Upper 2 */ [
-  [2,3,4],
-  [3,4,5]
-],
-/* Upper 3 */ [
-  [3,4,5],
-  [4,5,6]
-]
-];
-
-// FINAL TABLE C
-const tableC = [
- [1,2,3,4,5,6,7],
- [2,3,4,5,6,7,8],
- [3,4,5,6,7,8,9],
- [4,5,6,7,8,9,10],
- [5,6,7,8,9,10,11],
- [6,7,8,9,10,11,12],
- [7,8,9,10,11,12,13],
- [8,9,10,11,12,13,14]
-];
-
-// =========================
-
-let historyData = JSON.parse(localStorage.getItem("rebaHistory")) || [];
-
-// THEME
-document.getElementById("themeToggle").onclick = () => {
-  document.body.classList.toggle("dark");
-  localStorage.setItem("theme", document.body.classList.contains("dark"));
-};
-if (localStorage.getItem("theme") === "true") {
-  document.body.classList.add("dark");
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
 }
 
-// =========================
-// CALCULATE REBA (REAL)
-// =========================
 function calculateREBA() {
   const v = id => +document.getElementById(id).value;
 
-let neckScore = v("neck");
-let trunkScore = v("trunk");
-let upperArmScore = v("upperArm");
-let wristScore = v("wrist");
+  let neckScore = adjustNeck(v("neck"));
+  let trunkScore = adjustTrunk(v("trunk"));
+  let legsScore = v("legs");
 
-neckScore = adjustNeck(neckScore);
-trunkScore = adjustTrunk(trunkScore);
-upperArmScore = adjustUpperArm(upperArmScore);
-wristScore = adjustWrist(wristScore);
-
+  let upperArmScore = adjustUpperArm(v("upperArm"));
+  let lowerArmScore = v("lowerArm");
+  let wristScore = adjustWrist(v("wrist"));
 
   const load = v("load");
   const coupling = v("coupling");
   const activity = v("activity");
 
- const scoreA = tableA[neckScore-1][trunkScore-1][legs] + load;
- const scoreB = tableB[upperArmScore-1][lower][wristScore-1] + coupling;
-  
-   const finalScore = tableC[scoreA-1][scoreB-1] + activity;
+  // CLAMP sesuai tabel REBA
+  neckScore = clamp(neckScore, 1, 3);
+  trunkScore = clamp(trunkScore, 1, 5);
+  legsScore = clamp(legsScore, 1, 4);
+
+  upperArmScore = clamp(upperArmScore, 1, 3);
+  lowerArmScore = clamp(lowerArmScore, 1, 2);
+  wristScore = clamp(wristScore, 1, 3);
+
+  const scoreA =
+    tableA[neckScore - 1][trunkScore - 1][legsScore - 1] + load;
+
+  const scoreB =
+    tableB[upperArmScore - 1][lowerArmScore - 1][wristScore - 1] + coupling;
+
+  const finalScore =
+    tableC[clamp(scoreA,1,8)-1][clamp(scoreB,1,7)-1] + activity;
 
   let risk, rec;
   if (finalScore <= 1) {
