@@ -202,3 +202,13 @@ function adjustWrist(s) {
   if (isChecked("wristTwist")) s++;
   return s;
 }
+img.onload = () => {
+  const maxWidth = canvas.parentElement.clientWidth;
+  const scale = Math.min(1, maxWidth / img.width);
+
+  canvas.width = img.width * scale;
+  canvas.height = img.height * scale;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+};
