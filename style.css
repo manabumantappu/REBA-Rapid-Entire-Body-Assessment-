@@ -140,3 +140,15 @@ canvas {
 .risk-high{background:#ffe0b2;color:#8a4b08;}
 .risk-very-high{background:#ffcdd2;color:#b71c1c;}
 
+.step img{width:100%;border-radius:8px;margin-bottom:6px}
+.low{border:2px solid #81c784}
+.medium{border:2px solid #ffb74d}
+.high{border:2px solid #e57373}
+
+.risk-box{padding:6px 10px;border-radius:6px;font-weight:bold}
+.risk-low{background:#c8e6c9}
+.risk-medium{background:#fff3cd}
+.risk-high{background:#ffe0b2}
+.risk-very-high{background:#ffcdd2}
+
+canvas{width:100%;border:1px dashed #ccc;margin-top:10px}
