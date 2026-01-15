@@ -1,98 +1,144 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANALISA REBA</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REBA - Rapid Entire Body Assessment</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-  <h1 data-i18n="title">ANALISA REBA</h1>
-  <p data-i18n="subtitle">Rapid Entire Body Assessment</p>
-
-  <select id="langSelect">
-    <option value="id">🇮🇩 Indonesia</option>
-    <option value="en">🇬🇧 English</option>
-    <option value="jp">🇯🇵 日本語</option>
-  </select>
+  <h1>REBA Assessment</h1>
+  <p>Rapid Entire Body Assessment</p>
+  <button id="themeToggle">🌙 Dark Mode</button>
 </header>
 
 <main class="container">
 
+<!-- IDENTITAS -->
 <section>
-  <h2 data-i18n="taskInfo">Informasi Tugas</h2>
-  <label>Task <input id="taskName"></label>
-  <label>Reviewer <input id="reviewer"></label>
+  <h2>Informasi Penilaian</h2>
+  <label>Task / Pekerjaan
+    <input type="text" id="taskName" placeholder="Contoh: Angkat Box Gudang">
+  </label>
+  <label>Reviewer
+    <input type="text" id="reviewer" placeholder="Contoh: HSE Officer">
+  </label>
 </section>
 
+<!-- GRUP A -->
 <section>
-  <h2 data-i18n="upload">Upload Foto Postur</h2>
-  <input type="file" id="photoInput" accept="image/*">
-  <canvas id="canvas"></canvas>
+  <h2>Grup A (Leher, Punggung, Kaki)</h2>
+
+  <label>Leher
+    <select id="neck">
+      <option value="1">Netral</option>
+      <option value="2">Menunduk / menengadah</option>
+      <option value="3">Memutar / miring</option>
+    </select>
+  </label>
+
+  <label>Punggung
+    <select id="trunk">
+      <option value="1">Tegak</option>
+      <option value="2">Membungkuk ringan</option>
+      <option value="3">Membungkuk berat / memutar</option>
+      <option value="4">Ekstrem</option>
+    </select>
+  </label>
+
+  <label>Kaki
+    <select id="legs">
+      <option value="1">Stabil</option>
+      <option value="2">Satu kaki / tidak stabil</option>
+      <option value="3">Berlutut / jongkok</option>
+      <option value="4">Ekstrem</option>
+    </select>
+  </label>
 </section>
 
+<!-- GRUP B -->
 <section>
-  <h2>Group A</h2>
+  <h2>Grup B (Lengan)</h2>
 
-  <div class="step">
-    <img src="images/step-1-neck.JPG">
-    <label>Neck <select id="neck"></select></label>
-  </div>
+  <label>Lengan Atas
+    <select id="upperArm">
+      <option value="1">Netral</option>
+      <option value="2">Terangkat</option>
+      <option value="3">Di atas bahu</option>
+    </select>
+  </label>
 
-  <div class="step">
-    <img src="images/step-2-trunk.JPG">
-    <label>Trunk <select id="trunk"></select></label>
-  </div>
+  <label>Lengan Bawah
+    <select id="lowerArm">
+      <option value="1">Normal (60–100°)</option>
+      <option value="2">Ekstrem</option>
+    </select>
+  </label>
 
-  <div class="step">
-    <img src="images/step-3-legs.JPG">
-    <label>Legs <select id="legs"></select></label>
-  </div>
+  <label>Pergelangan Tangan
+    <select id="wrist">
+      <option value="1">Netral</option>
+      <option value="2">Menekuk / memutar</option>
+    </select>
+  </label>
 </section>
 
+<!-- FAKTOR TAMBAHAN -->
 <section>
-  <h2>Group B</h2>
+  <h2>Faktor Tambahan</h2>
 
-  <div class="step">
-    <img src="images/step-7-upper-arm.JPG">
-    <label>Upper Arm <select id="upperArm"></select></label>
-  </div>
+  <label>Beban / Force
+    <select id="load">
+      <option value="0">&lt; 5 kg</option>
+      <option value="1">5 – 10 kg</option>
+      <option value="2">&gt; 10 kg</option>
+    </select>
+  </label>
 
-  <div class="step">
-    <img src="images/step-8-lower-arm.JPG">
-    <label>Lower Arm <select id="lowerArm"></select></label>
-  </div>
+  <label>Coupling (Pegangan)
+    <select id="coupling">
+      <option value="0">Baik</option>
+      <option value="1">Cukup</option>
+      <option value="2">Buruk</option>
+    </select>
+  </label>
 
-  <div class="step">
-    <img src="images/step-9-wrist.JPG">
-    <label>Wrist <select id="wrist"></select></label>
-  </div>
-</section>
-
-<section>
-  <h2 data-i18n="additional">Faktor Tambahan</h2>
-  <label>Load <select id="load"><option value="0">&lt;5kg</option><option value="1">5–10kg</option><option value="2">&gt;10kg</option></select></label>
-  <label>Coupling <select id="coupling"><option value="0">Good</option><option value="1">Fair</option><option value="2">Poor</option></select></label>
-  <label>Activity <select id="activity"><option value="0">Normal</option><option value="1">Static</option></select></label>
+  <label>Aktivitas
+    <select id="activity">
+      <option value="0">Normal</option>
+      <option value="1">Berulang / statis</option>
+    </select>
+  </label>
 </section>
 
 <button onclick="calculateREBA()">Hitung REBA</button>
+<button class="secondary" onclick="resetForm()">Reset</button>
 
+<!-- HASIL -->
 <section id="result" class="hidden">
-  <h2 data-i18n="result">Hasil</h2>
-  <p>Score: <span id="finalScore"></span></p>
-  <p>Risk: <span id="riskLabel" class="risk-box"></span></p>
+  <h2>Hasil Penilaian</h2>
+  <p>Task: <strong id="rTask"></strong></p>
+  <p>Reviewer: <strong id="rReviewer"></strong></p>
 
-  <ul>
-    <li>Table A: <span id="scoreA"></span></li>
-    <li>Table B: <span id="scoreB"></span></li>
-    <li>Final: <span id="scoreC"></span></li>
-  </ul>
+  <p>Score A: <strong id="scoreA"></strong></p>
+  <p>Score B: <strong id="scoreB"></strong></p>
+
+  <hr>
+
+  <p>Skor REBA: <strong id="finalScore"></strong></p>
+  <p>Risiko: <strong id="risk"></strong></p>
+  <p id="recommendation"></p>
+
+  <button onclick="exportCSV()">Export CSV</button>
 </section>
 
 </main>
+
+<footer>
+  <p>© 2026 REBA Assessment | GitHub Pages Ready</p>
+</footer>
 
 <script src="script.js"></script>
 </body>
