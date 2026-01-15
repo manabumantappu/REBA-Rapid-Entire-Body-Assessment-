@@ -1,25 +1,74 @@
-body{font-family:Arial;margin:0;background:#f4f6f8}
-header{background:#1e88e5;color:#fff;padding:20px;text-align:center}
-.container{max-width:700px;margin:auto;padding:15px}
-section{background:#fff;padding:15px;margin-bottom:15px;border-radius:8px}
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-.step img{width:100%;border-radius:8px;margin-bottom:5px}
+body {
+  margin: 0;
+  background: #f4f6f8;
+  color: #333;
+}
 
-label{display:block;margin-bottom:10px}
-select,input{width:100%;padding:6px}
+header {
+  background: #1976d2;
+  color: #fff;
+  padding: 16px;
+  text-align: center;
+}
 
-button{width:100%;padding:12px;background:#1e88e5;color:#fff;border:none;border-radius:6px}
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 15px;
+}
 
-canvas{width:100%;border:1px dashed #ccc;margin-top:10px}
+section {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
 
-.hidden{display:none}
+label {
+  display: block;
+  margin-bottom: 10px;
+}
 
-.low{border:2px solid #81c784}
-.medium{border:2px solid #ffb74d}
-.high{border:2px solid #e57373}
+select, input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
 
-.risk-box{padding:6px 10px;border-radius:6px;font-weight:bold}
-.risk-low{background:#c8e6c9}
-.risk-medium{background:#fff3cd}
-.risk-high{background:#ffe0b2}
-.risk-very-high{background:#ffcdd2}
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  background: #1976d2;
+  color: #fff;
+  font-size: 16px;
+}
+
+button.secondary {
+  background: #777;
+}
+
+.hidden {
+  display: none;
+}
+
+/* DARK MODE */
+body.dark {
+  background: #121212;
+  color: #eee;
+}
+
+body.dark section {
+  background: #1e1e1e;
+}
+
+body.dark header {
+  background: #333;
+}
