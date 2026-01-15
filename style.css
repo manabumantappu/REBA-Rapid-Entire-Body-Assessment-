@@ -1,74 +1,131 @@
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REBA Analysis</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-body {
-  margin: 0;
-  background: #f4f6f8;
-  color: #333;
-}
+<header>
+  <h1 data-i18n="title">ANALISA REBA</h1>
+  <p data-i18n="subtitle">Penilaian Postur Kerja Metode REBA</p>
 
-header {
-  background: #1976d2;
-  color: #fff;
-  padding: 16px;
-  text-align: center;
-}
+  <select id="langSelect">
+    <option value="id">🇮🇩 Indonesia</option>
+    <option value="en">🇺🇸 English</option>
+    <option value="jp">🇯🇵 日本語</option>
+  </select>
 
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 15px;
-}
+  <button id="themeToggle">🌙 Dark Mode</button>
+</header>
 
-section {
-  background: #fff;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-}
+<main class="container">
 
-label {
-  display: block;
-  margin-bottom: 10px;
-}
+<section>
+  <label data-i18n="task">Nama Task / Pekerjaan</label>
+  <input type="text" id="taskName">
 
-select, input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-}
+  <label data-i18n="reviewer">Reviewer / Penilai</label>
+  <input type="text" id="reviewer">
+</section>
 
-button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 6px;
-  margin-top: 10px;
-  background: #1976d2;
-  color: #fff;
-  font-size: 16px;
-}
+<section>
+  <h2 data-i18n="groupA">Grup A</h2>
 
-button.secondary {
-  background: #777;
-}
+  <label data-i18n="neck">Leher</label>
+  <select id="neck">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
 
-.hidden {
-  display: none;
-}
+  <label data-i18n="trunk">Punggung</label>
+  <select id="trunk">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
 
-/* DARK MODE */
-body.dark {
-  background: #121212;
-  color: #eee;
-}
+  <label data-i18n="legs">Kaki</label>
+  <select id="legs">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
+</section>
 
-body.dark section {
-  background: #1e1e1e;
-}
+<section>
+  <h2 data-i18n="groupB">Grup B</h2>
 
-body.dark header {
-  background: #333;
-}
+  <label data-i18n="upperArm">Lengan Atas</label>
+  <select id="upperArm">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
+
+  <label data-i18n="lowerArm">Lengan Bawah</label>
+  <select id="lowerArm">
+    <option value="1">1</option>
+    <option value="2">2</option>
+  </select>
+
+  <label data-i18n="wrist">Pergelangan</label>
+  <select id="wrist">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
+</section>
+
+<section>
+  <h2 data-i18n="additional">Faktor Tambahan</h2>
+
+  <label data-i18n="load">Beban</label>
+  <select id="load">
+    <option value="0">0</option>
+    <option value="1">+1</option>
+    <option value="2">+2</option>
+  </select>
+
+  <label data-i18n="coupling">Coupling</label>
+  <select id="coupling">
+    <option value="0">0</option>
+    <option value="1">+1</option>
+    <option value="2">+2</option>
+  </select>
+
+  <label data-i18n="activity">Aktivitas</label>
+  <select id="activity">
+    <option value="0">0</option>
+    <option value="1">+1</option>
+  </select>
+</section>
+
+<button onclick="calculateREBA()" data-i18n="calc">Hitung REBA</button>
+<button onclick="resetForm()" class="secondary" data-i18n="reset">Reset</button>
+
+<section id="result" class="hidden">
+  <h2 data-i18n="result">Hasil Analisis</h2>
+
+  <p><b data-i18n="score">Skor REBA</b>: <span id="score"></span></p>
+  <p><b data-i18n="risk">Tingkat Risiko</b>: <span id="risk"></span></p>
+
+  <h3 data-i18n="summary">Summary Analisis Profesional</h3>
+  <p id="summaryText"></p>
+</section>
+
+</main>
+
+<footer>
+  © 2026 REBA Analysis | GitHub Pages Ready
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
